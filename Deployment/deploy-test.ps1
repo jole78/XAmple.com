@@ -1,10 +1,8 @@
-Add-PSSnapin WDeploySnapin3.0
-
 param 
 (
     [string]$PackagePath = $(throw '- Need parameter package file path')
 )
-
+Add-PSSnapin WDeploySnapin3.0
 $0 = $MyInvocation.MyCommand.Definition
 $dp0 = [System.IO.Path]::GetDirectoryName($0)
 
