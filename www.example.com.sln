@@ -13,6 +13,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Deployment", "Deployment", "{1D39F90D-0519-4B00-AC3B-9D8F90373A75}"
 	ProjectSection(SolutionItems) = preProject
 		Deployment\deploy-test.ps1 = Deployment\deploy-test.ps1
+		test.example.com.xml = test.example.com.xml
 		Deployment\wfe1.publishsettings = Deployment\wfe1.publishsettings
 	EndProjectSection
 EndProject
