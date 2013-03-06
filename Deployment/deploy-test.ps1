@@ -7,6 +7,6 @@ $0 = $MyInvocation.MyCommand.Definition
 $dp0 = [System.IO.Path]::GetDirectoryName($0)
 
 $params = Get-WDParameters -FilePath "$dp0\test.example.com.xml"
-Restore-WDPackage -Package $PackagePath -Parameters $params -DestinationPublishSettings "$dp0\wfe1.publishsettings"
+Restore-WDPackage -Package $PackagePath -Parameters $params -DestinationPublishSettings "$dp0\virjole-wfe1_build01.publishsettings"
 
 Write-Host "site deployed"
