@@ -1,6 +1,8 @@
 param 
 (
-    [string]$PathToPackage = $(throw '- Need parameter package file path')
+    [string]$PathToPackage = $(throw '- Need path to package'),
+	[string]$PathToParamsFile = $(throw '- Need path to parameters file'),
+	[string]$PathToPublishSettingsFile = $(throw '- Need path to PublishSettings file')
 )
 
 $0 = $MyInvocation.MyCommand.Definition
@@ -25,15 +27,41 @@ function Ensure-WDPowerShellMode {
 	}
 }
 
+function Load-Parameters {
+	
+	Write-Host " - Loading web deploy parameters '$PathToParamsFile..." -NoNewline
+	$ParamsFile = Get-WDParameters -FilePath $PathToParamsFile -ErrorAction:SilentlyContinue -ErrorVariable e | Out-Null
+	
+	if($? -eq $false) {
+		throw " - Get-WDParameters failed: $e"
+	}
+	Write-Host "OK" -ForegroundColor Green
+	
+	return $ParamsFile
+}
+
+function Load-PublishSettings {
+	
+	Write-Host " - Loading web deploy parameters '$PathToPublishSettingsFile..." -NoNewline
+	$PublishSettings = Get-WDPublishSettings -FileName $PathToPublishSettingsFile -ErrorAction:SilentlyContinue -ErrorVariable e | Out-Null
+	
+	if($? -eq $false) {
+		throw " - Get-WDPublishSettings failed: $e"
+	}
+	Write-Host "OK" -ForegroundColor Green
+	
+	return $PublishSettings
+}
+
 function Deploy-WebPackage {
-	$ParamsFile = Get-WDParameters -FilePath "$dp0\test.example.com.xml"
-	$PublishSettingsFile = Get-WDPublishSettings -FileName "$dp0\build01_virjole-wfe1.publishsettings"
+	#$ParamsFile = Get-WDParameters -FilePath "$dp0\test.example.com.xml"
+	#$PublishSettingsFile = Get-WDPublishSettings -FileName "$dp0\build01_virjole-wfe1.publishsettings"
 	
 	Write-Host " - Syncing package to server..." -NoNewline
 	Restore-WDPackage -ErrorAction:SilentlyContinue -ErrorVariable e `
 		-Package $PathToPackage `
-		-Parameters $ParamsFile `
-		-DestinationPublishSettings $PublishSettingsFile | Out-Null
+		-Parameters Load-Parameters `
+		-DestinationPublishSettings Load-PublishSettings | Out-Null
 	
 	if($? -eq $false) {
 		throw " - Restore-WDPackage failed: $e"
