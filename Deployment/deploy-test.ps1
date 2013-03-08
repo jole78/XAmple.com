@@ -55,11 +55,14 @@ function Load-PublishSettings {
 
 function Deploy-WebPackage {
 	
+	$WDParameters = Load-Parameters
+	$WDPublishSettings = Load-PublishSettings
+	
 	Write-Host " - Syncing package to server..." -NoNewline
 	Restore-WDPackage -ErrorAction:SilentlyContinue -ErrorVariable e `
 		-Package $PathToPackage `
-		-Parameters Load-Parameters `
-		-DestinationPublishSettings Load-PublishSettings | Out-Null
+		-Parameters $WDParameters `
+		-DestinationPublishSettings $WDPublishSettings
 	
 	if($? -eq $false) {
 		throw " - Restore-WDPackage failed: $e"
