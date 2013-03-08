@@ -29,33 +29,31 @@ function Ensure-WDPowerShellMode {
 
 function Load-Parameters {
 	
-	Write-Host " - Loading web deploy parameters '$PathToParamsFile..." -NoNewline
-	$ParamsFile = Get-WDParameters -FilePath $PathToParamsFile -ErrorAction:SilentlyContinue -ErrorVariable e | Out-Null
+	Write-Host " - Loading web deploy parameters '$PathToParamsFile'..." -NoNewline
+	$WDParameters = Get-WDParameters -FilePath $PathToParamsFile -ErrorAction:SilentlyContinue -ErrorVariable e
 	
 	if($? -eq $false) {
 		throw " - Get-WDParameters failed: $e"
 	}
 	Write-Host "OK" -ForegroundColor Green
 	
-	return $ParamsFile
+	return $WDParameters
 }
 
 function Load-PublishSettings {
 	
 	Write-Host " - Loading web deploy parameters '$PathToPublishSettingsFile..." -NoNewline
-	$PublishSettings = Get-WDPublishSettings -FileName $PathToPublishSettingsFile -ErrorAction:SilentlyContinue -ErrorVariable e | Out-Null
+	$WDPublishSettings = Get-WDPublishSettings -FileName $PathToPublishSettingsFile -ErrorAction:SilentlyContinue -ErrorVariable e
 	
 	if($? -eq $false) {
 		throw " - Get-WDPublishSettings failed: $e"
 	}
 	Write-Host "OK" -ForegroundColor Green
 	
-	return $PublishSettings
+	return $WDPublishSettings
 }
 
 function Deploy-WebPackage {
-	#$ParamsFile = Get-WDParameters -FilePath "$dp0\test.example.com.xml"
-	#$PublishSettingsFile = Get-WDPublishSettings -FileName "$dp0\build01_virjole-wfe1.publishsettings"
 	
 	Write-Host " - Syncing package to server..." -NoNewline
 	Restore-WDPackage -ErrorAction:SilentlyContinue -ErrorVariable e `
