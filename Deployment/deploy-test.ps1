@@ -1,11 +1,10 @@
 param 
 (
-    [string]$PackagePath = $(throw '- Need parameter package file path')
+    [string]$PathToPackage = $(throw '- Need parameter package file path')
 )
 
 $0 = $MyInvocation.MyCommand.Definition
 $dp0 = [System.IO.Path]::GetDirectoryName($0)
-
 
 function Ensure-WDPowerShellMode {
 	$WDPowerShellSnapin = Get-PSSnapin -Name WDeploySnapin3.0 -ErrorAction:SilentlyContinue
@@ -27,8 +26,20 @@ function Ensure-WDPowerShellMode {
 }
 
 function Deploy-WebPackage {
-	$params = Get-WDParameters -FilePath "$dp0\test.example.com.xml"
-	Restore-WDPackage -Package $PackagePath -Parameters $params -DestinationPublishSettings "$dp0\build01_virjole-wfe1.publishsettings"
+	$ParamsFile = Get-WDParameters -FilePath "$dp0\test.example.com.xml"
+	$PublishSettingsFile = Get-WDPublishSettings -FileName "$dp0\build01_virjole-wfe1.publishsettings"
+	
+	Write-Host " - Syncing package to server..." -NoNewline
+	Restore-WDPackage -ErrorAction:SilentlyContinue -ErrorVariable e `
+		-Package $PathToPackage `
+		-Parameters $ParamsFile `
+		-DestinationPublishSettings $PublishSettingsFile | Out-Null
+	
+	if($? -eq $false) {
+		throw " - Restore-WDPackage failed: $e"
+	}
+	
+	Write-Host "OK" -ForegroundColor Green
 }
 
 Ensure-WDPowerShellMode
