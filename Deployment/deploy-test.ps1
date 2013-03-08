@@ -44,8 +44,8 @@ function Deploy-WebPackage {
 	
 	$WDParameters = Load-Parameters
 	
-	Write-Host " - Syncing package '$PathToPackage'..." -NoNewline
-	Restore-WDPackage -ErrorAction:SilentlyContinue -ErrorVariable e `
+	Write-Host " - Syncing package '$PathToPackage' with parameter file '$PathToParamsFile'..." -NoNewline
+	$Result = Restore-WDPackage -ErrorAction:SilentlyContinue -ErrorVariable e `
 		-Package $PathToPackage `
 		-Parameters $WDParameters `
 		-DestinationPublishSettings $PathToPublishSettingsFile
@@ -55,6 +55,8 @@ function Deploy-WebPackage {
 	}
 	
 	Write-Host "OK" -ForegroundColor Green
+	Write-Host "Summary:"
+	$Result | Out-String
 }
 
 Ensure-WDPowerShellMode
