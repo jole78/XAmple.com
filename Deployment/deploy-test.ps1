@@ -40,29 +40,15 @@ function Load-Parameters {
 	return $WDParameters
 }
 
-function Load-PublishSettings {
-	
-	Write-Host " - Loading web deploy parameters '$PathToPublishSettingsFile..." -NoNewline
-	$WDPublishSettings = Get-WDPublishSettings -FileName $PathToPublishSettingsFile -ErrorAction:SilentlyContinue -ErrorVariable e
-	
-	if($? -eq $false) {
-		throw " - Get-WDPublishSettings failed: $e"
-	}
-	Write-Host "OK" -ForegroundColor Green
-	
-	return $WDPublishSettings
-}
-
 function Deploy-WebPackage {
 	
 	$WDParameters = Load-Parameters
-	$WDPublishSettings = Load-PublishSettings
 	
-	Write-Host " - Syncing package to server..." -NoNewline
+	Write-Host " - Syncing package '$PathToPackage'..." -NoNewline
 	Restore-WDPackage -ErrorAction:SilentlyContinue -ErrorVariable e `
 		-Package $PathToPackage `
 		-Parameters $WDParameters `
-		-DestinationPublishSettings $WDPublishSettings
+		-DestinationPublishSettings $PathToPublishSettingsFile
 	
 	if($? -eq $false) {
 		throw " - Restore-WDPackage failed: $e"
