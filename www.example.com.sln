@@ -16,7 +16,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Deployment", "Deployment", 
 		Deployment\deploy-test.ps1 = Deployment\deploy-test.ps1
 		Deployment\test.example.com.xml = Deployment\test.example.com.xml
 		Deployment\virjole-wfe1.publishsettings = Deployment\virjole-wfe1.publishsettings
-		Deployment\virjole-wfe1_build01.publishsettings = Deployment\virjole-wfe1_build01.publishsettings
 		Deployment\wfe1.publishsettings = Deployment\wfe1.publishsettings
 	EndProjectSection
 EndProject
