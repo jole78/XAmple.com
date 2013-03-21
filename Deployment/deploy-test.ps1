@@ -42,17 +42,19 @@ function Load-Parameters {
 
 function Deploy-WebPackage {
 	
-	$WDParameters = Load-Parameters
-	
-	Write-Host " - Syncing package '$PathToPackage' with parameter file '$PathToParamsFile'..." -NoNewline
-	$Result = Restore-WDPackage -ErrorAction:SilentlyContinue -ErrorVariable e `
-		-Package $PathToPackage `
-		-Parameters $WDParameters `
-		-DestinationPublishSettings $PathToPublishSettingsFile
-	
-	if($? -eq $false) {
-		throw " - Restore-WDPackage failed: $e"
-	}
+	$WDParameters = Load-Parameters	
+
+	try {
+		Write-Host " - Syncing package '$PathToPackage' with parameter file '$PathToParamsFile'..." -NoNewline
+		$Result = Restore-WDPackage -ErrorAction:Stop `
+			-Package $PathToPackage `
+			-Parameters $WDParameters `
+			-DestinationPublishSettings $PathToPublishSettingsFile
+		} catch {
+			$exception = $_.Exception
+			Write-Host "ERROR" -ForegroundColor:Red
+			throw " - Restore-WDPackage failed: $exception"
+		}		
 	
 	Write-Host "OK" -ForegroundColor Green
 	Write-Host "Summary:"
