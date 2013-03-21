@@ -66,5 +66,6 @@ try {
 	Ensure-WDPowerShellMode
 	Deploy-WebPackage
 } catch {
+	Write-Error $_.Exception
 	exit 1
 }
