@@ -61,5 +61,10 @@ function Deploy-WebPackage {
 	$Result | Out-String
 }
 
-Ensure-WDPowerShellMode
-Deploy-WebPackage
+
+try {
+	Ensure-WDPowerShellMode
+	Deploy-WebPackage
+} catch {
+	exit 1
+}
