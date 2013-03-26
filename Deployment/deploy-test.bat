@@ -54,8 +54,12 @@ if /I "%_ArgFlag%" == "/P:" (
 	set m_PassWord="_ArgValue"
 	goto :ArgumentOK
 )
-if /I "%_ArgFlag%" == "/R:" (
+if /I "%_ArgFlag%" == "/1:" (
 	set m_PrimaryServer="_ArgValue"
+	goto :ArgumentOK
+)
+if /I "%_ArgFlag%" == "/2:" (
+	set m_SecondaryServer="_ArgValue"
 	goto :ArgumentOK
 )
 
@@ -80,7 +84,7 @@ if errorlevel 1 (
 	echo. Please visit http://go.microsoft.com/?linkid=9278654
 	goto :Usage
 )
-@rem sync from package to server A
+echo. Sync from package to server A
 call %m_MSDeployCommandLine% -verb:sync -source:package="%m_PathToPackage%" -dest:auto,computerName=%m_PrimaryServer%,userName=%m_UserName%,password=%m_PassWord%,authType=Basic -disableLink:AppPoolExtension -disableLink:ContentExtension -disableLink:CertificateExtension -allowUntrusted -setParamFile:"%m_PathToParamsFile%"
 
 echo. OK
@@ -91,9 +95,9 @@ goto :Finish
 @rem ---------------------------------------------------------------------------------
 :Usage
 echo =========================================================
-echo Usage:%~nx0 [/M:MSDeployPath] [/Z:WebDeployPackage] [/R:RemoteServerUrl] [/U:Username] [/P:Password] [/S:SetParamsFile]
+echo Usage:%~nx0 [/M:MSDeployPath] [/Z:WebDeployPackage] [/1:PrimaryServer] [/U:Username] [/P:Password] [/S:SetParamsFile]
 echo Required flags:
-echo /R:  MSDeploy destination name of remote computer or proxy-URL.
+echo /1:  MSDeploy destination name of remote computer or proxy-URL. (Primary Server)
 echo /U:  MSDeploy destination user name. 
 echo /P:  MSDeploy destination password.
 echo /S:  Path to SetParamsFile
