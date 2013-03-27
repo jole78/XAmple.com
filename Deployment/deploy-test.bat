@@ -75,6 +75,7 @@ goto :ParseArguments
 
 :Start
 call :Validation
+echo %m_MSDeployPath%
 if /I "%m_ArgsValid%" NEQ "false" (
 	if /I "%m_MSDeployPath%" == "msdeploy.exe" (
 		set m_MSDeployCommandLine=%m_MSDeployPath%
