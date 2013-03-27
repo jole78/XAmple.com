@@ -22,7 +22,6 @@ if errorlevel 1 (
 			if /I "%%i" == "REG_SZ" ( 
 				if not "%%j" == "" ( 
 					if "%%~dpj" == "%%j" (
-						echo %%j 
 						set m_MSDeployPath=%%j
 )))))
 ) else (
@@ -78,6 +77,7 @@ goto :ParseArguments
 call :Validation
 echo %m_MSDeployPath%
 if /I "%m_ArgsValid%" NEQ "false" (
+	echo line 80
 	if /I "%m_MSDeployPath%" == "msdeploy.exe" (
 		set m_MSDeployCommandLine=%m_MSDeployPath%
 	) else (
@@ -130,7 +130,9 @@ if %m_SecondaryServer% == "" (
 	set m_ArgsValid=false
 	set m_InvalidArg=%m_InvalidArg%,2
 )
-if m_ArgsValid == "true" echo OK
+if m_ArgsValid == "true" (
+ 	echo OK 
+)
 goto :EOF
 
 @rem ---------------------------------------------------------------------------------
