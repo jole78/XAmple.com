@@ -4,6 +4,12 @@ setlocal
 @rem ---------------------------------------------------------------------------------
 @rem Variables
 @rem ---------------------------------------------------------------------------------
+set m_PathToPackage=""
+set m_PathToParamsFile=""
+set m_UserName=""
+set m_PassWord=""
+set m_PrimaryServer=""
+set m_SecondaryServer=""
 
 @rem ---------------------------------------------------------------------------------
 @rem Locating MSDeploy
@@ -39,70 +45,102 @@ if /I "%_ArgFlag%" == "/M:" (
 	goto :ArgumentOK
 )
 if /I "%_ArgFlag%" == "/Z:" (
-	set m_PathToPackage="_ArgValue"
+	set m_PathToPackage="%_ArgValue%"
 	goto :ArgumentOK
 )
 if /I "%_ArgFlag%" == "/S:" (
-	set m_PathToParamsFile="_ArgValue"
+	set m_PathToParamsFile="%_ArgValue%"
 	goto :ArgumentOK
 )
 if /I "%_ArgFlag%" == "/U:" (
-	set m_UserName="_ArgValue"
+	set m_UserName="%_ArgValue%"
 	goto :ArgumentOK
 )
 if /I "%_ArgFlag%" == "/P:" (
-	set m_PassWord="_ArgValue"
+	set m_PassWord="%_ArgValue%"
 	goto :ArgumentOK
 )
 if /I "%_ArgFlag%" == "/1:" (
-	set m_PrimaryServer="_ArgValue"
+	set m_PrimaryServer="%_ArgValue%"
 	goto :ArgumentOK
 )
 if /I "%_ArgFlag%" == "/2:" (
-	set m_SecondaryServer="_ArgValue"
+	set m_SecondaryServer="%_ArgValue%"
 	goto :ArgumentOK
 )
-
-
 
 :ArgumentOK
 shift
 goto :ParseArguments
 
-
 :Start
-if /I "%m_MSDeployPath%" == "msdeploy.exe" (
-	set m_MSDeployCommandLine=%m_MSDeployPath%
-) else (
-	set m_MSDeployCommandLine="%m_MSDeployPath%msdeploy.exe"
-)
+call :Validation
+if /I "%m_ArgsValid%" NEQ "false" (
+	if /I "%m_MSDeployPath%" == "msdeploy.exe" (
+		set m_MSDeployCommandLine=%m_MSDeployPath%
+	) else (
+		set m_MSDeployCommandLine="%m_MSDeployPath%msdeploy.exe"
+	)
 
-@rem try to call msdeploy.exe just to be safe
-call %m_MSDeployCommandLine% > NUL 2> NUL 
-if errorlevel 1 (
-	echo. msdeploy.exe is not found on this machine. Please install Web Deploy before execute the script. 
-	echo. Please visit http://go.microsoft.com/?linkid=9278654
+	@rem try to call msdeploy.exe just to be safe
+	call %m_MSDeployCommandLine% > NUL 2> NUL 
+	if errorlevel 1 (
+		echo. msdeploy.exe is not found on this machine. Please install Web Deploy before execute the script. 
+		echo. Please visit http://go.microsoft.com/?linkid=9278654
+		goto :Usage
+	)
+	echo. Syncing from package to primary server
+	call %m_MSDeployCommandLine% -verb:sync -source:package="%m_PathToPackage%" -dest:auto,computerName=%m_PrimaryServer%,userName=%m_UserName%,password=%m_PassWord%,authType=Basic -disableLink:AppPoolExtension -disableLink:ContentExtension -disableLink:CertificateExtension -allowUntrusted -setParamFile:"%m_PathToParamsFile%"
+	goto :Finish
+) else (
+	echo ERROR - required argument values for %m_InvalidArg%
+	
 	goto :Usage
 )
-echo. Sync from package to server A
-call %m_MSDeployCommandLine% -verb:sync -source:package="%m_PathToPackage%" -dest:auto,computerName=%m_PrimaryServer%,userName=%m_UserName%,password=%m_PassWord%,authType=Basic -disableLink:AppPoolExtension -disableLink:ContentExtension -disableLink:CertificateExtension -allowUntrusted -setParamFile:"%m_PathToParamsFile%"
 
-echo. OK
-goto :Finish
+:Validation
+echo. Validating arguments:
+set m_ArgsValid=true
+if %m_PathToPackage% == "" (
+	set m_ArgsValid=false
+	set m_InvalidArg=Z
+)
+if %m_PathToParamsFile% == "" (
+	set m_ArgsValid=false
+	set m_InvalidArg=%m_InvalidArg%,S
+)
+if %m_UserName% == "" (
+	set m_ArgsValid=false
+	set m_InvalidArg=%m_InvalidArg%,U
+)
+if %m_PassWord% == "" (
+	set m_ArgsValid=false
+	set m_InvalidArg=%m_InvalidArg%,P
+)
+if %m_PrimaryServer% == "" (
+	set m_ArgsValid=false
+	set m_InvalidArg=%m_InvalidArg%,1
+)
+if %m_SecondaryServer% == "" (
+	set m_ArgsValid=false
+	set m_InvalidArg=%m_InvalidArg%,2
+)
+goto :EOF
 
 @rem ---------------------------------------------------------------------------------
 @rem Usage
 @rem ---------------------------------------------------------------------------------
 :Usage
 echo =========================================================
-echo Usage:%~nx0 [/M:MSDeployPath] [/Z:WebDeployPackage] [/1:PrimaryServer] [/U:Username] [/P:Password] [/S:SetParamsFile]
-echo Required flags:
+echo Usage:%~nx0 [/1:PrimaryServer] [/2:SecondaryServer] [/Z:WebDeployPackage] [/U:Username] [/P:Password] [/S:SetParamsFile] [/M:MSDeployPath]
+echo Required:
 echo /1:  MSDeploy destination name of remote computer or proxy-URL. (Primary Server)
+echo /2:  MSDeploy destination name of remote computer or proxy-URL. (Secondary Server)
+echo /Z:  Path to web deploy package (zip)
 echo /U:  MSDeploy destination user name. 
 echo /P:  MSDeploy destination password.
 echo /S:  Path to SetParamsFile
-echo /Z:  Path to web deploy package (zip)
-echo Optional flags:
+echo Optional:
 echo /M:  Path to msdeploy.exe
 echo =========================================================
 goto :EOF
@@ -110,5 +148,6 @@ goto :EOF
 
 
 :Finish
+echo. OK
 goto :EOF
 
