@@ -21,7 +21,8 @@ if errorlevel 1 (
 		if /I "%%h" == "InstallPath" ( 
 			if /I "%%i" == "REG_SZ" ( 
 				if not "%%j" == "" ( 
-					if "%%~dpj" == "%%j" ( 
+					if "%%~dpj" == "%%j" (
+						echo %%j 
 						set m_MSDeployPath=%%j
 )))))
 ) else (
