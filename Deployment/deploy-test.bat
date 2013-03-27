@@ -83,7 +83,7 @@ if /I "%m_ArgsValid%" NEQ "false" (
 		set m_MSDeployCommandLine="%m_MSDeployPath%msdeploy.exe"
 	)
 
-	echo %m_MSDeployCommandLine%
+	echo. "%m_MSDeployCommandLine%"
 
 	@rem try to call msdeploy.exe just to be safe
 	call %m_MSDeployCommandLine% > NUL 2> NUL 
@@ -92,7 +92,7 @@ if /I "%m_ArgsValid%" NEQ "false" (
 		echo. Please visit http://go.microsoft.com/?linkid=9278654
 		goto :Usage
 	)
-	echo. Syncing from package to primary server
+	echo Syncing from package to primary server
 	call %m_MSDeployCommandLine% -verb:sync -source:package="%m_PathToPackage%" -dest:auto,computerName=%m_PrimaryServer%,userName=%m_UserName%,password=%m_PassWord%,authType=Basic -disableLink:AppPoolExtension -disableLink:ContentExtension -disableLink:CertificateExtension -allowUntrusted -setParamFile:"%m_PathToParamsFile%"
 	goto :Finish
 ) else (
