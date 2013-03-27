@@ -10,6 +10,7 @@ set m_UserName=""
 set m_PassWord=""
 set m_PrimaryServer=""
 set m_SecondaryServer=""
+set m_ArgsValid=true
 
 @rem ---------------------------------------------------------------------------------
 @rem Locating MSDeploy
@@ -74,7 +75,7 @@ shift
 goto :ParseArguments
 
 :Start
-call :Validation
+@rem call :Validation
 echo %m_MSDeployPath%
 if /I "%m_ArgsValid%" NEQ "false" (
 	echo line 80
