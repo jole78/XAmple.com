@@ -83,6 +83,7 @@ if /I "%m_ArgsValid%" NEQ "false" (
 		set m_MSDeployCommandLine="%m_MSDeployPath%msdeploy.exe"
 	)
 
+	echo line 86
 	echo. "%m_MSDeployCommandLine%"
 
 	@rem try to call msdeploy.exe just to be safe
