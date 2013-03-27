@@ -82,6 +82,8 @@ if /I "%m_ArgsValid%" NEQ "false" (
 		set m_MSDeployCommandLine="%m_MSDeployPath%msdeploy.exe"
 	)
 
+	echo %m_MSDeployCommandLine%
+
 	@rem try to call msdeploy.exe just to be safe
 	call %m_MSDeployCommandLine% > NUL 2> NUL 
 	if errorlevel 1 (
@@ -99,7 +101,7 @@ if /I "%m_ArgsValid%" NEQ "false" (
 )
 
 :Validation
-echo. Validating arguments:
+echo Validating arguments:
 set m_ArgsValid=true
 if %m_PathToPackage% == "" (
 	set m_ArgsValid=false
@@ -125,6 +127,7 @@ if %m_SecondaryServer% == "" (
 	set m_ArgsValid=false
 	set m_InvalidArg=%m_InvalidArg%,2
 )
+if m_ArgsValid == "true" echo OK
 goto :EOF
 
 @rem ---------------------------------------------------------------------------------
