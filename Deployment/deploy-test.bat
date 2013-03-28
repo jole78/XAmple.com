@@ -23,10 +23,10 @@ if errorlevel 1 (
 			if /I "%%i" == "REG_SZ" ( 
 				if not "%%j" == "" ( 
 					if "%%~dpj" == "%%j" (
-						set m_MSDeployPath="%%j" & msdeploy.exe
+						set m_MSDeployPath=%%j
 )))))
 ) else (
-	set m_MSDeployPath=msdeploy.exe
+	set m_MSDeployPath=""
 )
 
 @rem ---------------------------------------------------------------------------------
@@ -75,12 +75,10 @@ shift
 goto :ParseArguments
 
 :Start
-call :ValidateMSDeployPath
 call :ValidateArguments
-echo %m_MSDeployPath%
 if /I "%m_ArgsValid%" NEQ "false" (
 	echo Syncing from package to primary server
-	call "%m_MSDeployPath%" -verb:sync -source:package="%m_PathToPackage%" -dest:auto,computerName=%m_PrimaryServer%,userName=%m_UserName%,password=%m_PassWord%,authType=Basic -disableLink:AppPoolExtension -disableLink:ContentExtension -disableLink:CertificateExtension -allowUntrusted -setParamFile:"%m_PathToParamsFile%"
+	call "%m_MSDeployPath%msdeploy.exe" -verb:sync -source:package="%m_PathToPackage%" -dest:auto,computerName=%m_PrimaryServer%,userName=%m_UserName%,password=%m_PassWord%,authType=Basic -disableLink:AppPoolExtension -disableLink:ContentExtension -disableLink:CertificateExtension -allowUntrusted -setParamFile:"%m_PathToParamsFile%"
 	goto :Finish
 ) else (
 	set m_ErrorMessage=required argument values for %m_InvalidArg%
@@ -90,17 +88,6 @@ if /I "%m_ArgsValid%" NEQ "false" (
 
 :ERROR
 echo ERROR - %m_ErrorMessage%
-goto :EOF
-
-:ValidateMSDeployPath
-echo Validating path to msdeploy.exe
-if /I "%m_MSDeployPath%" == "msdeploy.exe" (
-	set m_MSDeployCommandLine=%m_MSDeployPath%
-) else (
-	echo 100
-	echo "%m_MSDeployPath%msdeploy.exe"
-	set m_MSDeployCommandLine="%m_MSDeployPath%msdeploy.exe"
-)
 goto :EOF
 
 :ValidateArguments
