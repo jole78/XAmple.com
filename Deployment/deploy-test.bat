@@ -75,36 +75,33 @@ shift
 goto :ParseArguments
 
 :Start
-@rem call :Validation
+call :ValidateMSDeployPath
+call :ValidateArguments
 echo %m_MSDeployPath%
 if /I "%m_ArgsValid%" NEQ "false" (
-	echo line 80
-	if /I "%m_MSDeployPath%" == "msdeploy.exe" (
-		set m_MSDeployCommandLine=%m_MSDeployPath%
-	) else (
-		set m_MSDeployCommandLine="%m_MSDeployPath%msdeploy.exe"
-	)
-
-	echo line 86
-	echo. "%m_MSDeployCommandLine%"
-
-	@rem try to call msdeploy.exe just to be safe
-	call %m_MSDeployCommandLine% > NUL 2> NUL 
-	if errorlevel 1 (
-		echo. msdeploy.exe is not found on this machine. Please install Web Deploy before execute the script. 
-		echo. Please visit http://go.microsoft.com/?linkid=9278654
-		goto :Usage
-	)
 	echo Syncing from package to primary server
 	call %m_MSDeployCommandLine% -verb:sync -source:package="%m_PathToPackage%" -dest:auto,computerName=%m_PrimaryServer%,userName=%m_UserName%,password=%m_PassWord%,authType=Basic -disableLink:AppPoolExtension -disableLink:ContentExtension -disableLink:CertificateExtension -allowUntrusted -setParamFile:"%m_PathToParamsFile%"
 	goto :Finish
 ) else (
-	echo ERROR - required argument values for %m_InvalidArg%
-	
+	set m_ErrorMessage=required argument values for %m_InvalidArg%
+	call :ERROR
 	goto :Usage
 )
 
-:Validation
+:ERROR
+echo ERROR - %m_ErrorMessage%
+goto :EOF
+
+:ValidateMSDeployPath
+echo Validating path to msdeploy.exe
+if /I "%m_MSDeployPath%" == "msdeploy.exe" (
+	set m_MSDeployCommandLine=%m_MSDeployPath%
+) else (
+	set m_MSDeployCommandLine="%m_MSDeployPath%msdeploy.exe"
+)
+goto :EOF
+
+:ValidateArguments
 echo Validating arguments:
 set m_ArgsValid=true
 if %m_PathToPackage% == "" (
