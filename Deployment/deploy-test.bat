@@ -97,6 +97,7 @@ echo Validating path to msdeploy.exe
 if /I "%m_MSDeployPath%" == "msdeploy.exe" (
 	set m_MSDeployCommandLine=%m_MSDeployPath%
 ) else (
+	echo "%m_MSDeployPath%msdeploy.exe"
 	set m_MSDeployCommandLine="%m_MSDeployPath%msdeploy.exe"
 )
 goto :EOF
