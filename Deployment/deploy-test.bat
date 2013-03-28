@@ -82,13 +82,13 @@ if /I "%m_ArgsValid%" NEQ "false" (
 	goto :Finish
 ) else (
 	set m_ErrorMessage=required argument values for %m_InvalidArg%
-	call :ERROR
-	goto :Usage
+	call :Usage
+	goto :ERROR
 )
 
 :ERROR
 echo ERROR - %m_ErrorMessage%
-goto :EOF
+exit 1
 
 :ValidateArguments
 echo Validating arguments:
@@ -99,23 +99,23 @@ if %m_PathToPackage% == "" (
 )
 if %m_PathToParamsFile% == "" (
 	set m_ArgsValid=false
-	set m_InvalidArg=%m_InvalidArg%,S
+	set m_InvalidArg=%m_InvalidArg% S
 )
 if %m_UserName% == "" (
 	set m_ArgsValid=false
-	set m_InvalidArg=%m_InvalidArg%,U
+	set m_InvalidArg=%m_InvalidArg% U
 )
 if %m_PassWord% == "" (
 	set m_ArgsValid=false
-	set m_InvalidArg=%m_InvalidArg%,P
+	set m_InvalidArg=%m_InvalidArg% P
 )
 if %m_PrimaryServer% == "" (
 	set m_ArgsValid=false
-	set m_InvalidArg=%m_InvalidArg%,1
+	set m_InvalidArg=%m_InvalidArg% 1
 )
 if %m_SecondaryServer% == "" (
 	set m_ArgsValid=false
-	set m_InvalidArg=%m_InvalidArg%,2
+	set m_InvalidArg=%m_InvalidArg% 2
 )
 if m_ArgsValid == "true" (
  	echo OK 
