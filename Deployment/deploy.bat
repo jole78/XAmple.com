@@ -87,7 +87,7 @@ if /I "%m_ArgsValid%" NEQ "false" (
 	set m_SecondaryServerArgs=computerName=%m_SecondaryServer%,userName=%m_UserName%,password=%m_PassWord%,authType=Basic
 
 	echo Syncing from package to primary server...	
-	call "%m_MSDeployPath%msdeploy.exe" -verb:sync -source:package="%m_PathToPackage%" -dest:auto,%m_PrimaryServerArgs% -disableLink:AppPoolExtension -disableLink:ContentExtension -disableLink:CertificateExtension -allowUntrusted -setParamFile:"%m_PathToParamsFile%"
+	call "%m_MSDeployPath%msdeploy.exe" -verb:sync -source:package="%m_PathToPackage%" -dest:auto,computerName=%m_PrimaryServer%,userName=%m_UserName%,password=%m_PassWord%,authType=Basic -disableLink:AppPoolExtension -disableLink:ContentExtension -disableLink:CertificateExtension -allowUntrusted -setParamFile:"%m_PathToParamsFile%"
 	
 	@rem echo Syncing from primary server to secondary server...
 	@rem call "%m_MSDeployPath%msdeploy.exe" -verb:sync -source:contentPath=%m_SitePath%,%m_PrimaryServerArgs% -dest:auto,%m_SecondaryServerArgs% -allowUntrusted
