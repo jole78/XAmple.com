@@ -117,7 +117,7 @@ if %m_SecondaryServer% == "" (
 	set m_ArgsValid=false
 	set m_InvalidArg=%m_InvalidArg% 2
 )
-if %m_ArgsValid% == "true" (
+if /i "%m_ArgsValid%" == "true" (
  	echo OK 
 )
 goto :EOF
@@ -143,6 +143,6 @@ goto :EOF
 
 
 :Finish
-echo. OK
+echo OK
 goto :EOF
 
