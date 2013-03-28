@@ -83,15 +83,14 @@ goto :ParseArguments
 :Start
 call :ValidateArguments
 if /I "%m_ArgsValid%" NEQ "false" (
-	echo Syncing from package to primary server...
-	set m_SourceProvider=package="%m_PathToPackage%"
-	set m_DestProvider=auto,computerName=%m_PrimaryServer%,userName=%m_UserName%,password=%m_PassWord%,authType=Basic
-	call "%m_MSDeployPath%msdeploy.exe" -verb:sync -source:%m_SourceProvider% -dest:%m_DestProvider% -disableLink:AppPoolExtension -disableLink:ContentExtension -disableLink:CertificateExtension -allowUntrusted -setParamFile:"%m_PathToParamsFile%"
+	set m_PrimaryServerArgs=computerName=%m_PrimaryServer%,userName=%m_UserName%,password=%m_PassWord%,authType=Basic
+	set m_SecondaryServerArgs=computerName=%m_SecondaryServer%,userName=%m_UserName%,password=%m_PassWord%,authType=Basic
+
+	echo Syncing from package to primary server...	
+	call "%m_MSDeployPath%msdeploy.exe" -verb:sync -source:package="%m_PathToPackage%" -dest:auto,%m_PrimaryServerArgs% -disableLink:AppPoolExtension -disableLink:ContentExtension -disableLink:CertificateExtension -allowUntrusted -setParamFile:"%m_PathToParamsFile%"
 	
 	echo Syncing from primary server to secondary server...
-	set m_SourceProvider=contentPath="%m_SitePath%",computerName=%m_PrimaryServer%,userName=%m_UserName%,password=%m_PassWord%,authType=Basic
-	set m_DestProvider=auto,computerName=%m_SecondaryServer%,userName=%m_UserName%,password=%m_PassWord%,authType=Basic
-	call "%m_MSDeployPath%msdeploy.exe" -verb:sync -source:%m_SourceProvider% -dest:%m_DestProvider% -allowUntrusted
+	call "%m_MSDeployPath%msdeploy.exe" -verb:sync -source:contentPath=%m_SitePath%,%m_PrimaryServerArgs% -dest:auto,%m_SecondaryServerArgs% -allowUntrusted
 
 	goto :Finish
 ) else (
