@@ -83,14 +83,12 @@ goto :ParseArguments
 :Start
 call :ValidateArguments
 if /I "%m_ArgsValid%" NEQ "false" (
-	set m_PrimaryServerArgs=computerName=%m_PrimaryServer%,userName=%m_UserName%,password=%m_PassWord%,authType=Basic
-	set m_SecondaryServerArgs=computerName=%m_SecondaryServer%,userName=%m_UserName%,password=%m_PassWord%,authType=Basic
 
 	echo Syncing from package to primary server...	
 	call "%m_MSDeployPath%msdeploy.exe" -verb:sync -source:package="%m_PathToPackage%" -dest:auto,computerName=%m_PrimaryServer%,userName=%m_UserName%,password=%m_PassWord%,authType=Basic -disableLink:AppPoolExtension -disableLink:ContentExtension -disableLink:CertificateExtension -allowUntrusted -setParamFile:"%m_PathToParamsFile%"
 	
 	echo Syncing from primary server to secondary server...
-	call "%m_MSDeployPath%msdeploy.exe" -verb:sync -source:contentPath=%m_SitePath%,%m_PrimaryServerArgs% -dest:auto,%m_SecondaryServerArgs% -allowUntrusted
+	call "%m_MSDeployPath%msdeploy.exe" -verb:sync -source:contentPath=%m_SitePath%,computerName=%m_PrimaryServer%,userName=%m_UserName%,password=%m_PassWord%,authType=Basic -dest:auto,computerName=%m_SecondaryServer%,userName=%m_UserName%,password=%m_PassWord%,authType=Basic -allowUntrusted
 
 	goto :Finish
 ) else (
