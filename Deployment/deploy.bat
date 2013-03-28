@@ -10,6 +10,7 @@ set m_UserName=""
 set m_PassWord=""
 set m_PrimaryServer=""
 set m_SecondaryServer=""
+set m_SitePath=""
 set m_ArgsValid=true
 
 @rem ---------------------------------------------------------------------------------
@@ -69,6 +70,11 @@ if /I "%_ArgFlag%" == "/2:" (
 	set m_SecondaryServer="%_ArgValue%"
 	goto :ArgumentOK
 )
+if /I "%_ArgFlag%" == "/I:" (
+	set m_SitePath="%_ArgValue%"
+	goto :ArgumentOK
+)
+
 
 :ArgumentOK
 shift
@@ -77,8 +83,16 @@ goto :ParseArguments
 :Start
 call :ValidateArguments
 if /I "%m_ArgsValid%" NEQ "false" (
-	echo Syncing from package to primary server
-	call "%m_MSDeployPath%msdeploy.exe" -verb:sync -source:package="%m_PathToPackage%" -dest:auto,computerName=%m_PrimaryServer%,userName=%m_UserName%,password=%m_PassWord%,authType=Basic -disableLink:AppPoolExtension -disableLink:ContentExtension -disableLink:CertificateExtension -allowUntrusted -setParamFile:"%m_PathToParamsFile%"
+	echo Syncing from package to primary server...
+	set m_SourceProvider=package="%m_PathToPackage%"
+	set m_DestProvider=auto,computerName=%m_PrimaryServer%,userName=%m_UserName%,password=%m_PassWord%,authType=Basic
+	call "%m_MSDeployPath%msdeploy.exe" -verb:sync -source:%m_SourceProvider% -dest:%m_DestProvider% -disableLink:AppPoolExtension -disableLink:ContentExtension -disableLink:CertificateExtension -allowUntrusted -setParamFile:"%m_PathToParamsFile%"
+	
+	echo Syncing from primary server to secondary server...
+	set m_SourceProvider=contentPath="%m_SitePath%",computerName=%m_PrimaryServer%,userName=%m_UserName%,password=%m_PassWord%,authType=Basic
+	set m_DestProvider=auto,computerName=%m_SecondaryServer%,userName=%m_UserName%,password=%m_PassWord%,authType=Basic
+	call "%m_MSDeployPath%msdeploy.exe" -verb:sync -source:%m_SourceProvider% -dest:%m_DestProvider% -allowUntrusted
+
 	goto :Finish
 ) else (
 	set m_ErrorMessage=required argument values for %m_InvalidArg%
@@ -117,6 +131,10 @@ if %m_SecondaryServer% == "" (
 	set m_ArgsValid=false
 	set m_InvalidArg=%m_InvalidArg% 2
 )
+if %m_SitePath% == "" (
+	set m_ArgsValid=false
+	set m_InvalidArg=%m_InvalidArg% I
+)
 if /i "%m_ArgsValid%" == "true" (
  	echo OK 
 )
@@ -127,14 +145,15 @@ goto :EOF
 @rem ---------------------------------------------------------------------------------
 :Usage
 echo =========================================================
-echo Usage:%~nx0 [/1:PrimaryServer] [/2:SecondaryServer] [/Z:WebDeployPackage] [/U:Username] [/P:Password] [/S:SetParamsFile] [/M:MSDeployPath]
+echo Usage:%~nx0 [/1:PrimaryServer] [/2:SecondaryServer] [/Z:WebDeployPackage] [/U:Username] [/P:Password] [/S:SetParamsFile] [/I:SitePath] [/M:MSDeployPath]
 echo Required:
 echo /1:  MSDeploy destination name of remote computer or proxy-URL. (Primary Server)
 echo /2:  MSDeploy destination name of remote computer or proxy-URL. (Secondary Server)
 echo /Z:  Path to web deploy package (zip)
 echo /U:  MSDeploy destination user name. 
 echo /P:  MSDeploy destination password.
-echo /S:  Path to SetParamsFile
+echo /S:  Path to SetParamsFile (xml parameters file)
+echo /I:  IIS site name (e.g. test.example.com)
 echo Optional:
 echo /M:  Path to msdeploy.exe
 echo =========================================================
