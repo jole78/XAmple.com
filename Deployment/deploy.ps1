@@ -65,7 +65,7 @@ function Deploy-WebPackage {
 
 function Sync-Servers {
 	try {
-		Write-Host " - Syncing servers..." -NoNewline
+		Write-Host " - Syncing site '$SitePath' to other servers..." -NoNewline
 		$Result = Sync-WDSite -ErrorAction:Stop `
 			-SourcePublishSettings $PathToPrimaryServerPublishSettingsFile `
 			-DestinationPublishSettings $PathToSecondaryServerPublishSettingsFile `
