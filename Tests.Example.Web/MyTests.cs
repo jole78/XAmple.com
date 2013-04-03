@@ -1,4 +1,5 @@
 ﻿using Xunit;
+using FluentAssertions;
 
 namespace Tests.Example.Web
 {
@@ -7,7 +8,13 @@ namespace Tests.Example.Web
         [Fact]
         public void MyTest()
         {
-            Assert.Equal(4, 2 + 2);
-        }
+            int expected = 4;
+
+            int actual = 2 + 2;
+
+            actual
+                .Should()
+                .Be(expected);
+         }
     }
 }
