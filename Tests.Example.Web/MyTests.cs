@@ -1,11 +1,12 @@
-﻿using Xunit;
-using FluentAssertions;
+﻿using FluentAssertions;
+using NUnit.Framework;
 
 namespace Tests.Example.Web
 {
+    [TestFixture]
     public class MyTests
     {
-        [Fact]
+        [Test]
         public void MyTest()
         {
             int expected = 4;
