@@ -2,7 +2,9 @@ param
 (
     [string]$PathToPackage = $(throw '- Need path to package'),
 	[string]$PathToParamsFile = $(throw '- Need path to parameters file'),
-	[string]$PathToPublishSettingsFile = $(throw '- Need path to PublishSettings file')
+	[string]$SitePath = $(throw '- Need IIS site name'),
+	[string]$PathToPrimaryServerPublishSettingsFile = $(throw '- Need path to .PublishSettings file for primary WFE server'),
+	[string]$PathToSecondaryServerPublishSettingsFile = $(throw '- Need path to .PublishSettings file for secondary WFE server')
 )
 
 $0 = $MyInvocation.MyCommand.Definition
@@ -49,7 +51,7 @@ function Deploy-WebPackage {
 		$Result = Restore-WDPackage -ErrorAction:Stop `
 			-Package $PathToPackage `
 			-Parameters $WDParameters `
-			-DestinationPublishSettings $PathToPublishSettingsFile
+			-DestinationPublishSettings $PathToPrimaryServerPublishSettingsFile
 		} catch {
 			$exception = $_.Exception
 			Write-Host "ERROR" -ForegroundColor:Red
@@ -61,10 +63,31 @@ function Deploy-WebPackage {
 	$Result | Out-String
 }
 
+function Sync-Servers {
+	try {
+		Write-Host " - Syncing site '$SitePath' to other servers..." -NoNewline
+		$Result = Sync-WDSite -ErrorAction:Stop `
+			-SourcePublishSettings $PathToPrimaryServerPublishSettingsFile `
+			-DestinationPublishSettings $PathToSecondaryServerPublishSettingsFile `
+			-SourceSite $SitePath -DestinationSite $SitePath `
+			-IncludeAppPool:$false
+			
+	} catch {
+		$exception = $_.Exception
+		Write-Host "ERROR" -ForegroundColor:Red
+		throw " - Restore-WDPackage failed: $exception"
+	}
+	
+	Write-Host "OK" -ForegroundColor Green
+	Write-Host "Summary:"
+	$Result | Out-String
+}
+
 
 try {
 	Ensure-WDPowerShellMode
 	Deploy-WebPackage
+	Sync-Servers
 } catch {
 	Write-Error $_.Exception
 	exit 1
