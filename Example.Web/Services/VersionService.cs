@@ -8,6 +8,7 @@ namespace Example.Web.Services
 
         public Version GetVersionInformation()
         {
+            // TODO: not testable
             return Assembly.GetExecutingAssembly().GetName().Version;
         }
     }
