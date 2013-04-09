@@ -1,24 +1,25 @@
-﻿@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<System.Version>
+﻿
 
 <!DOCTYPE html>
-<html ng-app>
+<html ng-app="www.example.com">
   <head>
     <title>Version</title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <link href="~/Content/bootstrap.min.css" rel="stylesheet" media="screen" />
-      <script src="~/Scripts/angular.min.js"></script>
-      <script src="~/Scripts/angular-resource.js"></script>
-      <script src="~/Scripts/app.min.js"></script>
   </head>
   <body>
-      <h1>Hello, world!</h1>
       
+      <h1>Application Version</h1>
       <div ng-controller="Version.Controller">
-          <p>{{Hello}}</p>
+         <p>{{Version.Major}}.{{Version.Minor}}.{{Version.Build}}.{{Version.Revision}}</p>
       </div>
       
-      
-      <script src="~/Scripts/bootstrap.min.js"></script>
+      <script src="~/Scripts/angular.js"></script>
+      <script src="~/Scripts/angular-resource.js"></script>
+      <script src="~/Scripts/app.js"></script>
+      <script src="~/Scripts/services.js"></script>
+      <script src="~/Scripts/controllers.js"></script>
+      <script src="~/Scripts/bootstrap.js"></script>
 
   </body>
 </html>

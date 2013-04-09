@@ -99,6 +99,13 @@
     <Content Include="Scripts\angular.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <TypeScriptCompile Include="Scripts\controllers.ts" />
+    <Content Include="Scripts\controllers.js">
+      <DependentUpon>controllers.ts</DependentUpon>
+    </Content>
+    <Content Include="Scripts\controllers.min.js">
+      <DependentUpon>controllers.ts</DependentUpon>
+    </Content>
     <Content Include="Scripts\i18n\angular-locale_am-et.js" />
     <Content Include="Scripts\i18n\angular-locale_am.js" />
     <Content Include="Scripts\i18n\angular-locale_ar-eg.js" />
@@ -259,6 +266,13 @@
     <Content Include="Scripts\jquery-1.9.1.min.js" />
     <Content Include="Scripts\jstd-scenario-adapter-config.js" />
     <Content Include="Scripts\jstd-scenario-adapter.js" />
+    <TypeScriptCompile Include="Scripts\services.ts" />
+    <Content Include="Scripts\services.js">
+      <DependentUpon>services.ts</DependentUpon>
+    </Content>
+    <Content Include="Scripts\services.min.js">
+      <DependentUpon>services.ts</DependentUpon>
+    </Content>
     <Content Include="Scripts\typings\angularjs\angular-cookies.d.ts" />
     <Content Include="Scripts\typings\angularjs\angular-mocks.d.ts" />
     <Content Include="Scripts\typings\angularjs\angular-resource.d.ts" />
@@ -271,6 +285,7 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Bootstrapper.cs" />
     <Compile Include="Modules\HelpModule.cs" />
     <Compile Include="Services\IVersionService.cs" />
     <Compile Include="Modules\VersionModule.cs" />
