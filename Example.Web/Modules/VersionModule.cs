@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using Example.Web.Services;
+﻿using Example.Web.Services;
 using Nancy;
 
 namespace Example.Web.Modules
@@ -11,6 +8,7 @@ namespace Example.Web.Modules
         private readonly IVersionService m_VersionService;
 
         public VersionModule(IVersionService versionService)
+            :base("/help/version")
         {
             m_VersionService = versionService;
 
