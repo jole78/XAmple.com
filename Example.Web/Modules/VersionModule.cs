@@ -14,7 +14,8 @@ namespace Example.Web.Modules
 
             Get["/"] = delegate(dynamic parameters)
                        {
-                           return Response.AsJson(m_VersionService.GetVersionInformation());
+                           var version = m_VersionService.GetVersionInformation();
+                           return Response.AsJson(version);
                        };
         }
     }
