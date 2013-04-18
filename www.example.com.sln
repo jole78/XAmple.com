@@ -11,7 +11,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Deployment", "Deployment", "{1D39F90D-0519-4B00-AC3B-9D8F90373A75}"
 	ProjectSection(SolutionItems) = preProject
 		Deployment\build01_virjole-wfe1.publishsettings = Deployment\build01_virjole-wfe1.publishsettings
-		deploy-test.bat = deploy-test.bat
+		Deployment\build01_virjole-wfe2.publishsettings = Deployment\build01_virjole-wfe2.publishsettings
+		Deployment\deploy.bat = Deployment\deploy.bat
 		Deployment\deploy.ps1 = Deployment\deploy.ps1
 		Deployment\test.example.com.xml = Deployment\test.example.com.xml
 	EndProjectSection
