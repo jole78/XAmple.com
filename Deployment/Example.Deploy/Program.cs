@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 
 namespace Example.Deploy
 {
@@ -34,14 +35,31 @@ namespace Example.Deploy
 
         static void Main(string[] args)
         {
+
             if (m_ExecutionContext == ExecutionContext.TeamCity)
             {
-                Console.WriteLine("Executing in TeamCity");
+                Console.WriteLine("##teamcity[progressStart 'deployment in progress...']");
             }
             else
             {
-                Console.WriteLine("Executing in a Windows Console");
+                Console.WriteLine("deployment in progress...");
             }
+            
+            // START deployment
+            // simulated by pausing for 10 seconds...
+            Thread.Sleep(TimeSpan.FromSeconds(10));
+
+            if (m_ExecutionContext == ExecutionContext.TeamCity)
+            {
+                Console.WriteLine("##teamcity[progressFinish 'deployment completed successfully']");
+            }
+            else
+            {
+                Console.WriteLine("deployment completed successfully");
+                Console.Read();
+            }
+
+
         }
 
     }
