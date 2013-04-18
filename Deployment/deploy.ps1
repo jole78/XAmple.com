@@ -7,8 +7,6 @@ param
 	[string]$PathToSecondaryServerPublishSettingsFile = $(throw '- Need path to .PublishSettings file for secondary WFE server')
 )
 
-#$0 = $MyInvocation.MyCommand.Definition
-#$dp0 = [System.IO.Path]::GetDirectoryName($0)
 
 $TeamCity = $Env:TEAMCITY_DATA_PATH
 	
@@ -98,7 +96,7 @@ try {
 	Sync-Servers
 	
 	if($TeamCity) {
-		Write-Host "##teamcity[progressFinish 'deployment completed successfully']"
+		Write-Host "##teamcity[progressFinish 'deployment in progress...']"
 	}
 	
 } catch {

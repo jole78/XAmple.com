@@ -51,7 +51,7 @@ namespace Example.Deploy
 
             if (m_ExecutionContext == ExecutionContext.TeamCity)
             {
-                Console.WriteLine("##teamcity[progressFinish 'deployment completed successfully']");
+                Console.WriteLine("##teamcity[progressFinish 'deployment in progress...']");
             }
             else
             {
