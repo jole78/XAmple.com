@@ -7,8 +7,17 @@ param
 	[string]$PathToSecondaryServerPublishSettingsFile = $(throw '- Need path to .PublishSettings file for secondary WFE server')
 )
 
-$0 = $MyInvocation.MyCommand.Definition
-$dp0 = [System.IO.Path]::GetDirectoryName($0)
+
+function Configure-ExecutionContext {
+	if($Env:TEAMCITY_DATA_PATH) {
+		$Script:OnDeploymentStarting = [System.Action] { Write-Host "##teamcity[progressStart 'deployment in progress...']" }
+		$Script:OnDeploymentFinished = [System.Action] { Write-Host "##teamcity[progressFinish 'deployment in progress...']" }
+	} else {
+		$Script:OnDeploymentStarting = [System.Action] { Write-Host "deployment started" }
+		$Script:OnDeploymentFinished = [System.Action] { Write-Host "deployment finished successfully" }
+	}
+}
+	
 
 function Ensure-WDPowerShellMode {
 	$WDPowerShellSnapin = Get-PSSnapin -Name WDeploySnapin3.0 -ErrorAction:SilentlyContinue
@@ -85,9 +94,17 @@ function Sync-Servers {
 
 
 try {
+	
+	Configure-ExecutionContext
+	
+	$OnDeploymentStarting.Invoke()
+	
 	Ensure-WDPowerShellMode
 	Deploy-WebPackage
 	Sync-Servers
+	
+	$OnDeploymentFinished.Invoke()
+	
 } catch {
 	Write-Error $_.Exception
 	exit 1

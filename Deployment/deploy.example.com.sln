@@ -1,0 +1,29 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Example.Deploy", "Example.Deploy\Example.Deploy.csproj", "{EDBC0CF9-FBCF-4CD4-8EE9-FCB3BEB32328}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build Files", "Build Files", "{158E40A2-1125-438D-8AAC-763B0C58E760}"
+	ProjectSection(SolutionItems) = preProject
+		build01_virjole-wfe1.publishsettings = build01_virjole-wfe1.publishsettings
+		build01_virjole-wfe2.publishsettings = build01_virjole-wfe2.publishsettings
+		deploy.bat = deploy.bat
+		deploy.ps1 = deploy.ps1
+		test.example.com.xml = test.example.com.xml
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EDBC0CF9-FBCF-4CD4-8EE9-FCB3BEB32328}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EDBC0CF9-FBCF-4CD4-8EE9-FCB3BEB32328}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EDBC0CF9-FBCF-4CD4-8EE9-FCB3BEB32328}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EDBC0CF9-FBCF-4CD4-8EE9-FCB3BEB32328}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
