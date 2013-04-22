@@ -5,11 +5,15 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Example.Deploy", "Example.D
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build Files", "Build Files", "{158E40A2-1125-438D-8AAC-763B0C58E760}"
 	ProjectSection(SolutionItems) = preProject
-		build01_virjole-wfe1.publishsettings = build01_virjole-wfe1.publishsettings
-		build01_virjole-wfe2.publishsettings = build01_virjole-wfe2.publishsettings
 		deploy.bat = deploy.bat
 		deploy.ps1 = deploy.ps1
-		test.example.com.xml = test.example.com.xml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Environments", "Environments", "{2423876C-BAF2-42A4-8A34-50540BCC168E}"
+	ProjectSection(SolutionItems) = preProject
+		..\Environments\build01_virjole-wfe1.publishsettings = ..\Environments\build01_virjole-wfe1.publishsettings
+		..\Environments\build01_virjole-wfe2.publishsettings = ..\Environments\build01_virjole-wfe2.publishsettings
+		..\Environments\test.example.com.xml = ..\Environments\test.example.com.xml
 	EndProjectSection
 EndProject
 Global
