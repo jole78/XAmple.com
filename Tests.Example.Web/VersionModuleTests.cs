@@ -2,15 +2,17 @@
 using Example.Web.Modules;
 using Example.Web.Services;
 using FluentAssertions;
+using FluentAutomation;
 using Moq;
 using NUnit.Framework;
 using Nancy.Testing;
 using Newtonsoft.Json;
+using TinyIoC;
 
 namespace Tests.Example.Web
 {
     [TestFixture]
-    public class TestClass
+    public class VersionModuleTests
     {
         [Test]
         public void TEST()
@@ -30,6 +32,7 @@ namespace Tests.Example.Web
 
             // WHEN
             var response = browser.Get("/help/version");
+            
 
             // THEN
             var json = JsonConvert.DeserializeObject<Version>(response.Body.AsString());
@@ -37,6 +40,23 @@ namespace Tests.Example.Web
             json.ToString().Should()
                 .BeEquivalentTo("1.0.0.1");
 
+        }
+    }
+
+    public class VersionModuleWrapper
+    {
+         
+    }
+
+    public class BrowserAutomation : FluentTest
+    {
+        public BrowserAutomation()
+        {
+            FluentAutomation.Settings.Registration = ConfigureContainer;
+        }
+
+        private void ConfigureContainer(TinyIoCContainer container)
+        {
         }
     }
 }
