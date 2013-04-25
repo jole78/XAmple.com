@@ -9,7 +9,7 @@ using Nancy.Testing;
 using Newtonsoft.Json;
 using TinyIoC;
 
-namespace Tests.Example.Web
+namespace XAmple.Web.Tests
 {
     [TestFixture]
     public class VersionModuleTests
