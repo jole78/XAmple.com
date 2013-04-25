@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Example.Deploy
+namespace XAmple.Deploy
 {
     class Program
     {

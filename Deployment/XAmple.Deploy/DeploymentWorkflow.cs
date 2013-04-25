@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading;
 
-namespace Example.Deploy
+namespace XAmple.Deploy
 {
     public class DeploymentWorkflow
     {

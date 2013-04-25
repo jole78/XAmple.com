@@ -1,19 +1,12 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Example.Deploy", "Example.Deploy\Example.Deploy.csproj", "{EDBC0CF9-FBCF-4CD4-8EE9-FCB3BEB32328}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XAmple.Deploy", "XAmple.Deploy\XAmple.Deploy.csproj", "{EDBC0CF9-FBCF-4CD4-8EE9-FCB3BEB32328}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build Files", "Build Files", "{158E40A2-1125-438D-8AAC-763B0C58E760}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{51327E5A-B86C-4D22-B2B3-3E221F4DB8CE}"
 	ProjectSection(SolutionItems) = preProject
 		deploy.bat = deploy.bat
 		deploy.ps1 = deploy.ps1
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Environments", "Environments", "{2423876C-BAF2-42A4-8A34-50540BCC168E}"
-	ProjectSection(SolutionItems) = preProject
-		..\Environments\build01_virjole-wfe1.publishsettings = ..\Environments\build01_virjole-wfe1.publishsettings
-		..\Environments\build01_virjole-wfe2.publishsettings = ..\Environments\build01_virjole-wfe2.publishsettings
-		..\Environments\test.example.com.xml = ..\Environments\test.example.com.xml
 	EndProjectSection
 EndProject
 Global
@@ -29,5 +22,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{EDBC0CF9-FBCF-4CD4-8EE9-FCB3BEB32328} = {51327E5A-B86C-4D22-B2B3-3E221F4DB8CE}
 	EndGlobalSection
 EndGlobal
