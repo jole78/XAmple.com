@@ -1,7 +1,7 @@
 using System;
 using System.Reflection;
 
-namespace Example.Web.Services
+namespace XAmple.Web.Services
 {
     public class VersionService : IVersionService 
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Example.Web.Services
+namespace XAmple.Web.Services
 {
     public interface IVersionService
     {

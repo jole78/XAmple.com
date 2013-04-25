@@ -76,9 +76,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Example.Web\Example.Web.csproj">
+    <ProjectReference Include="..\XAmple.Web\XAmple.Web.csproj">
       <Project>{7025067A-086A-43F4-A663-3E0C6E30B7CF}</Project>
-      <Name>Example.Web</Name>
+      <Name>XAmple.Web</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

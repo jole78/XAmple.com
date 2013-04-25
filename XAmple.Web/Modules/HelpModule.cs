@@ -1,6 +1,6 @@
 ﻿using Nancy;
 
-namespace Example.Web.Modules
+namespace XAmple.Web.Modules
 {
     public class HelpModule : NancyModule
     {

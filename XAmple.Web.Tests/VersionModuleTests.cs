@@ -1,6 +1,4 @@
 ﻿using System;
-using Example.Web.Modules;
-using Example.Web.Services;
 using FluentAssertions;
 using FluentAutomation;
 using Moq;
@@ -8,6 +6,8 @@ using NUnit.Framework;
 using Nancy.Testing;
 using Newtonsoft.Json;
 using TinyIoC;
+using XAmple.Web.Modules;
+using XAmple.Web.Services;
 
 namespace XAmple.Web.Tests
 {

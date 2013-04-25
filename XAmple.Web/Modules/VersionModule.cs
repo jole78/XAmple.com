@@ -1,7 +1,7 @@
-﻿using Example.Web.Services;
-using Nancy;
+﻿using Nancy;
+using XAmple.Web.Services;
 
-namespace Example.Web.Modules
+namespace XAmple.Web.Modules
 {
     public class VersionModule : NancyModule
     {

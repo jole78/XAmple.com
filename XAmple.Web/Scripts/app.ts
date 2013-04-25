@@ -2,8 +2,8 @@
 /// <reference path="typings/angularjs/angular-resource.d.ts" />
 
 
-angular.module('www.example.com',
-    [   'services.example.com'
+angular.module('XAmple',
+    [   'XAmple.services'
     ]);
 
 
