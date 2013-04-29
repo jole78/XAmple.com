@@ -8,7 +8,7 @@ namespace XAmple.Web.Modules
         private readonly IVersionService m_VersionService;
 
         public VersionModule(IVersionService versionService)
-            :base("/help/version")
+            :base("/about/version")
         {
             m_VersionService = versionService;
 
