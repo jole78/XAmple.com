@@ -18,6 +18,8 @@ namespace XAmple.Specs.Steps
         {
             instance.BaseAddress = "http://teamcity.virjole.local";
             instance.BuildTypeId = "bt3";
+
+            //TODO: use basic auth should be here
         }
 
         private void OnCreatingApplicationApi(ApplicationApi instance)
