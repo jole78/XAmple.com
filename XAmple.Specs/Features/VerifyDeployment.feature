@@ -1,7 +1,9 @@
-﻿@AfterDeployment
+﻿@Deployment
 Feature: Verify Deployment
 
-
+@environment.test
+Background: Using the test environment
+	Given it is the test environment
 
 Scenario: Verify that deployment was successful
 	Given I have already retrieved the application version

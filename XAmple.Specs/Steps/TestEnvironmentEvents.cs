@@ -1,19 +1,18 @@
-﻿using System;
-using System.Net.Http;
-using TechTalk.SpecFlow;
+﻿using TechTalk.SpecFlow;
 using XAmple.Specs.Support.Wrappers;
 
 namespace XAmple.Specs.Steps
 {
-    [Binding, Scope(Tag = "env.test")]
+    [Binding, Scope(Tag = "environment.test")]
     public class TestEnvironmentEvents
     {
-        [BeforeTestRun]
-        public void OnBeforeTestRun()
+        [Given(@"it is the test environment")]
+        public void SetupEnvironment_Step()
         {
             ApplicationApi.OnCreating = OnCreatingApplicationApi;
             TeamCityApi.OnCreating = OnCreatingTeamCityApi;
         }
+
 
         private void OnCreatingTeamCityApi(TeamCityApi instance)
         {
