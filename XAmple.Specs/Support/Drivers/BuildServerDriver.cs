@@ -1,15 +1,12 @@
 ﻿using System;
-using FluentAssertions;
+using TechTalk.SpecFlow;
 using XAmple.Specs.Support.Wrappers;
 
 namespace XAmple.Specs.Support.Drivers
 {
-    // no need for interface right now, extract when needed
     public class BuildServerDriver
     {
         private readonly TeamCityApi m_TeamCityApi;
-        private Version m_Version;
-        private string m_BuildTypeId;
 
         public BuildServerDriver(TeamCityApi teamCityApi)
         {
@@ -19,21 +16,14 @@ namespace XAmple.Specs.Support.Drivers
             //m_TeamCityWrapper.UseBasicAuthentication("api", "pass@word1");
         }
 
-        public void RetrieveBuildVersion()
+        public Version RetrieveBuildVersion()
         {
             var response = m_TeamCityApi.GetLatestSuccessfulBuild();
             var buildNO = response.Element("build").Attribute("number").Value;
+            var version = new Version(buildNO);
 
-            m_Version = new Version(buildNO);
+            return version;
         }
-
-        // not a driver method
-        public BuildServerDriver SetBuildTypeId(string id)
-        {
-            m_BuildTypeId = id;
-            return this;
-        }
-
 
     }
 }

@@ -17,10 +17,8 @@ namespace XAmple.Specs.Steps
         [When(@"I retrieve the build version")]
         public void RetrieveBuildVersion_Step()
         {
-            m_Driver
-                .RetrieveBuildVersion();
+            var version = m_Driver.RetrieveBuildVersion();
+            ScenarioContext.Current.Set(version, ScenarioContextKeys.BuildVersion);
         }
-
-
     }
 }

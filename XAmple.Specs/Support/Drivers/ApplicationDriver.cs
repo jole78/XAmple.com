@@ -1,4 +1,5 @@
-﻿using TechTalk.SpecFlow;
+﻿using System;
+using TechTalk.SpecFlow;
 using XAmple.Specs.Support.Wrappers;
 
 namespace XAmple.Specs.Support.Drivers
@@ -12,10 +13,11 @@ namespace XAmple.Specs.Support.Drivers
             m_ApplicationApi = applicationApi;
         }
 
-        public void RetrieveApplicationVersion()
+        public Version RetrieveApplicationVersion()
         {
             var response = m_ApplicationApi.GetVersion();
-            ScenarioContext.Current.Set(response, "ApplicationDriver.Version");
+            return response;
+           
         }
 
     }
