@@ -5,7 +5,6 @@ namespace XAmple.Specs.Support.Wrappers
 {
     public abstract class RestApiBase
     {
-        //TODO: make it possible to use basic auth
 
         protected abstract string GetBaseAddress();
 

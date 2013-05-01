@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net.Http;
 using TechTalk.SpecFlow;
 using XAmple.Specs.Support.Wrappers;
 
@@ -19,7 +20,19 @@ namespace XAmple.Specs.Steps
             instance.BaseAddress = "http://teamcity.virjole.local";
             instance.BuildTypeId = "bt3";
 
-            //TODO: use basic auth should be here
+            /* uncomment section to use basic authentication */
+            /* --- */
+            //instance.OnBeforeRequest = delegate(HttpClient client)
+            //                           {
+            //                               client.UseBasicAuthentication("api", "pass@word1");
+            //                           };
+            //instance.OnCreatingGetLatestSuccessfulBuildUrl = delegate(UriBuilder builder)
+            //                                                 {
+            //                                                     builder.RemoveQueryString("guest");
+            //                                                 };
+            /* --- */ 
+
+            
         }
 
         private void OnCreatingApplicationApi(ApplicationApi instance)
