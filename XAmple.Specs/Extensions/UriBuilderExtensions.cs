@@ -1,5 +1,6 @@
 ﻿// ReSharper disable CheckNamespace
 
+using System.Web;
 using FluentAssertions;
 using NUnit.Framework;
 
@@ -10,20 +11,37 @@ namespace System
     {
          public static void AddQueryString(this UriBuilder instance, string key, string value)
          {
-             if (instance.Query != null && instance.Query.Length > 1)
-             {
-                 instance.Query = string.Format("{0}&{1}={2}", instance.Query.Substring(1), key, value);
-             }
-             else
-             {
-                 instance.Query = string.Format("{0}={1}", key, value);
-             }
+             var query = HttpUtility.ParseQueryString(instance.Query);
+             query.Set(key, value);
+
+             instance.Query = query.ToString();
          }
+
+        public static void RemoveQueryString(this UriBuilder instance, string key)
+        {
+            var query = HttpUtility.ParseQueryString(instance.Query);
+            query.Remove(key);
+
+            instance.Query = query.ToString();
+        }
     }
 
     [TestFixture]
     public class UriBuilderExtensionsTests
     {
+        [Test]
+        public void RemoveQueryStringTest()
+        {
+            var expected = new Uri("http://www.example.com");
+            var actual = new UriBuilder("http://www.example.com?param=value");
+
+            actual.RemoveQueryString("param");
+
+            actual.Uri
+                  .Should()
+                  .Be(expected);
+        }
+
         [Test]
         public void Test()
         {
