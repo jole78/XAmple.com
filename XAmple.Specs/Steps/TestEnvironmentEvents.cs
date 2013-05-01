@@ -6,8 +6,9 @@ namespace XAmple.Specs.Steps
     [Binding, Scope(Tag = "environment.test")]
     public class TestEnvironmentEvents
     {
-        [Given(@"it is the test environment")]
-        public void SetupEnvironment_Step()
+
+        [BeforeScenario]
+        public void OnBeforeScenario()
         {
             ApplicationApi.OnCreating = OnCreatingApplicationApi;
             TeamCityApi.OnCreating = OnCreatingTeamCityApi;

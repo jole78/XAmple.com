@@ -21,7 +21,11 @@ namespace XAmple.Specs.Support.Wrappers
 
         public XElement GetLatestSuccessfulBuild()
         {
-            var endpoint = new UriBuilder(string.Format("/buildTypes/id:{0}/builds?status=SUCCESS&count=1&guest=1", BuildTypeId));
+            var endpoint = new UriBuilder
+                           {
+                               Path = string.Format("/httpAuth/app/rest/buildTypes/id:{0}/builds", BuildTypeId),
+                               Query = "status=SUCCESS&count=1&guest=1"
+                           };
             OnCreatingGetLatestSuccessfulBuildUrl(endpoint);
 
             XElement result = new XElement("null");
@@ -29,7 +33,7 @@ namespace XAmple.Specs.Support.Wrappers
                         {
                             OnBeforeRequest(client);
 
-                            var response = client.GetAsync(endpoint.Uri).Result;
+                            var response = client.GetAsync(endpoint.Uri.PathAndQuery).Result;
                             response.EnsureSuccessStatusCode();
                             result = response.Content.ReadAsAsync<XElement>().Result;
                         });
