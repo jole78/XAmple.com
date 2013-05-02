@@ -18,7 +18,7 @@ namespace XAmple.Specs.Steps
         private void OnCreatingTeamCityApi(TeamCityApi instance)
         {
             instance.BaseAddress = "http://teamcity.virjole.local";
-            instance.BuildTypeId = "bt3";
+            instance.BuildTypeId = "bt2"; // A - Application
 
             /* uncomment section to use basic authentication */
             /* --- */
