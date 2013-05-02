@@ -1,6 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net.Http;
-using Newtonsoft.Json.Linq;
 
 namespace XAmple.Specs.Support.Wrappers
 {
