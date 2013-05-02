@@ -23,8 +23,8 @@ namespace XAmple.Specs.Support.Wrappers
         {
             var endpoint = new UriBuilder
                            {
-                               Path = string.Format("/httpAuth/app/rest/buildTypes/id:{0}/builds", BuildTypeId),
-                               Query = "locator=running:true&guest=1"
+                               Path = "/httpAuth/app/rest/builds",
+                               Query = string.Format("locator=buildType:{0},running:true&guest=1", BuildTypeId)
                            };
             OnCreatingGetRunningBuildUrl(endpoint);
 
