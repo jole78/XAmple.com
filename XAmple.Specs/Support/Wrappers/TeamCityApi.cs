@@ -11,7 +11,7 @@ namespace XAmple.Specs.Support.Wrappers
         public string BaseAddress { get; set; }
         public string BuildTypeId { get; set; }
         public Action<HttpClient> OnBeforeRequest = delegate { };
-        public Action<UriBuilder> OnCreatingGetLatestSuccessfulBuildUrl = delegate { };
+        public Action<UriBuilder> OnCreatingGetRunningBuildUrl = delegate { };
          
 
         public TeamCityApi()
@@ -19,14 +19,14 @@ namespace XAmple.Specs.Support.Wrappers
             OnCreating(this);
         }
 
-        public XElement GetLatestSuccessfulBuild()
+        public XElement GetRunningBuild()
         {
             var endpoint = new UriBuilder
                            {
                                Path = string.Format("/httpAuth/app/rest/buildTypes/id:{0}/builds", BuildTypeId),
-                               Query = "status=SUCCESS&count=1&guest=1"
+                               Query = "locator=running:true&guest=1"
                            };
-            OnCreatingGetLatestSuccessfulBuildUrl(endpoint);
+            OnCreatingGetRunningBuildUrl(endpoint);
 
             XElement result = new XElement("null");
             UsingClient(delegate(HttpClient client)

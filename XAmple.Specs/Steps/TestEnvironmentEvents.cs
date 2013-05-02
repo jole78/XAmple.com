@@ -1,4 +1,6 @@
-﻿using TechTalk.SpecFlow;
+﻿using System;
+using System.Net.Http;
+using TechTalk.SpecFlow;
 using XAmple.Specs.Support.Wrappers;
 
 namespace XAmple.Specs.Steps
@@ -15,10 +17,10 @@ namespace XAmple.Specs.Steps
         }
 
 
-        private void OnCreatingTeamCityApi(TeamCityApi instance)
+        private static void OnCreatingTeamCityApi(TeamCityApi instance)
         {
             instance.BaseAddress = "http://teamcity.virjole.local";
-            instance.BuildTypeId = "bt2"; // A - Application
+            instance.BuildTypeId = "bt3"; // 1 - deploy => test
 
             /* uncomment section to use basic authentication */
             /* --- */
@@ -26,16 +28,16 @@ namespace XAmple.Specs.Steps
             //                           {
             //                               client.UseBasicAuthentication("api", "pass@word1");
             //                           };
-            //instance.OnCreatingGetLatestSuccessfulBuildUrl = delegate(UriBuilder builder)
-            //                                                 {
-            //                                                     builder.RemoveQueryString("guest");
-            //                                                 };
-            /* --- */ 
+            //instance.OnCreatingGetRunningBuildUrl = delegate(UriBuilder builder)
+            //                                        {
+            //                                            builder.RemoveQueryString("guest");
+            //                                        };
+            /* --- */
 
-            
+
         }
 
-        private void OnCreatingApplicationApi(ApplicationApi instance)
+        private static void OnCreatingApplicationApi(ApplicationApi instance)
         {
             instance.BaseAddress = "http://test.xample.com";
         }
