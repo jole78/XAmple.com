@@ -9,13 +9,12 @@ namespace XAmple.Specs.Steps
     public class TestEnvironmentEvents
     {
 
-        [BeforeScenario]
-        public void OnBeforeScenario()
+        [BeforeFeature]
+        public static void OnBeforeFeature()
         {
             ApplicationApi.OnCreating = OnCreatingApplicationApi;
             TeamCityApi.OnCreating = OnCreatingTeamCityApi;
         }
-
 
         private static void OnCreatingTeamCityApi(TeamCityApi instance)
         {
