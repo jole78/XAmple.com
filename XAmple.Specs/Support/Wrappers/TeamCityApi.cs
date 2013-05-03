@@ -29,10 +29,10 @@ namespace XAmple.Specs.Support.Wrappers
             var response = client.Get("/httpAuth/app/rest/builds", new
             {
                 locator = string.Format("buildType:{0},running:true", BuildTypeId),
-                guest = 1
+                guest = 1,count=1
             });
 
-            var build = response.DynamicBody.build;
+            var build = response.DynamicBody.build[0];
             var buildNO = build.number;
 
             return new Version(buildNO);
