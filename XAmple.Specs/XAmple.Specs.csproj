@@ -32,8 +32,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EasyHttp">
+      <HintPath>..\packages\EasyHttp.1.6.52.0\lib\net40\EasyHttp.dll</HintPath>
+    </Reference>
     <Reference Include="FluentAssertions">
       <HintPath>..\packages\FluentAssertions.2.0.1\lib\net45\FluentAssertions.dll</HintPath>
+    </Reference>
+    <Reference Include="JsonFx">
+      <HintPath>..\packages\JsonFx.2.0.1209.2802\lib\net40\JsonFx.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -44,9 +50,6 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Net.Http.Formatting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
-    <Reference Include="System.Net.Http.WebRequest" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -58,8 +61,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Extensions\HttpClientExtensions.cs" />
-    <Compile Include="Extensions\UriBuilderExtensions.cs" />
     <Compile Include="Features\VerifyDeployment.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -69,13 +70,10 @@
     <Compile Include="Steps\ApplicationSteps.cs" />
     <Compile Include="Steps\BuildServerSteps.cs" />
     <Compile Include="Steps\TestEnvironmentEvents.cs" />
-    <Compile Include="Steps\ScenarioContextKeys.cs" />
     <Compile Include="Steps\Transformations.cs" />
     <Compile Include="Steps\VerifyDeploymentSteps.cs" />
     <Compile Include="Support\Wrappers\ApplicationApi.cs" />
-    <Compile Include="Support\Drivers\ApplicationDriver.cs" />
-    <Compile Include="Support\Drivers\BuildServerDriver.cs" />
-    <Compile Include="Support\Wrappers\RestApiBase.cs" />
+    <Compile Include="Support\Drivers\Driver.cs" />
     <Compile Include="Support\Wrappers\TeamCityApi.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Net.Http;
+﻿
 using TechTalk.SpecFlow;
 using XAmple.Specs.Support.Wrappers;
 
