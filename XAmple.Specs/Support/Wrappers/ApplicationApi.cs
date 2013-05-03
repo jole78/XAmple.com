@@ -1,10 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Net.Http;
+using EasyHttp.Http;
+using Newtonsoft.Json;
 
 namespace XAmple.Specs.Support.Wrappers
 {
-    public class ApplicationApi : RestApiBase
+    public class ApplicationApi
     {
         public static Action<ApplicationApi> OnCreating = delegate { };
 
@@ -17,23 +17,15 @@ namespace XAmple.Specs.Support.Wrappers
 
         public Version GetVersion()
         {
-            var endpoint = new Uri("/about/version", UriKind.Relative);
+            var client = new HttpClient(BaseAddress)
+                         {
+                             Request = { Accept = HttpContentTypes.ApplicationJson }
+                         };
 
-            Version result = null;
-            UsingClient(delegate(HttpClient client)
-                        {
-                            var response = client.GetAsync(endpoint).Result;
-                            response.EnsureSuccessStatusCode();
+            var response = client.Get("/about/version");
+            var version = JsonConvert.DeserializeObject<Version>(response.RawText);
 
-                            result = response.Content.ReadAsAsync<Version>().Result;
-                        });
-
-            return result;
-        }
-
-        protected override string GetBaseAddress()
-        {
-            return BaseAddress;
+            return version;
         }
     }
 }

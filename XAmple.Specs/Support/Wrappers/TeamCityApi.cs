@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Net.Http;
-using System.Xml.Linq;
+using EasyHttp.Http;
 
 namespace XAmple.Specs.Support.Wrappers
 {
-    public class TeamCityApi : RestApiBase
+    public class TeamCityApi
     {
         public static Action<TeamCityApi> OnCreating = delegate { };
 
@@ -19,31 +18,25 @@ namespace XAmple.Specs.Support.Wrappers
             OnCreating(this);
         }
 
-        public XElement GetRunningBuild()
+        public Version GetRunningBuildVersion()
         {
-            var endpoint = new UriBuilder
-                           {
-                               Path = "/httpAuth/app/rest/builds",
-                               Query = string.Format("locator=buildType:{0},running:true&guest=1", BuildTypeId)
-                           };
-            OnCreatingGetRunningBuildUrl(endpoint);
+            //TODO: fix OnBeforeRequest and OnCreatingGetRunningBuildUrl
 
-            XElement result = new XElement("null");
-            UsingClient(delegate(HttpClient client)
-                        {
-                            OnBeforeRequest(client);
+            var client = new HttpClient(BaseAddress)
+                         {
+                            Request = {Accept = HttpContentTypes.ApplicationJson}
+                         };
+            var response = client.Get("/httpAuth/app/rest/builds", new
+            {
+                locator = string.Format("buildType:{0},running:running", BuildTypeId),
+                guest = 1
+            });
 
-                            var response = client.GetAsync(endpoint.Uri.PathAndQuery).Result;
-                            response.EnsureSuccessStatusCode();
-                            result = response.Content.ReadAsAsync<XElement>().Result;
-                        });
+            var build = response.DynamicBody.build;
+            var buildNO = build.number;
 
-            return result;
+            return new Version(buildNO);
         }
 
-        protected override string GetBaseAddress()
-        {
-            return BaseAddress;
-        }
     }
 }

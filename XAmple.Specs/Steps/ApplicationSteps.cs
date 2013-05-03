@@ -6,9 +6,9 @@ namespace XAmple.Specs.Steps
     [Binding]
     public class ApplicationSteps
     {
-        private readonly ApplicationDriver m_Driver;
+        private readonly Driver m_Driver;
 
-        public ApplicationSteps(ApplicationDriver driver)
+        public ApplicationSteps(Driver driver)
         {
             m_Driver = driver;
         }
@@ -16,8 +16,8 @@ namespace XAmple.Specs.Steps
         [Given(@"I have already retrieved the application version")]
         public void RetrieveApplicationVersion_Step()
         {
-            var version = m_Driver.RetrieveApplicationVersion();
-            ScenarioContext.Current.Set(version, ScenarioContextKeys.ApplicationVersion); 
+            m_Driver
+                .RetrieveApplicationVersion();
         }
     }
 }

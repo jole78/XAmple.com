@@ -7,9 +7,9 @@ namespace XAmple.Specs.Steps
     [Binding]
     public class BuildServerSteps
     {
-        private readonly BuildServerDriver m_Driver;
+        private readonly Driver m_Driver;
 
-        public BuildServerSteps(BuildServerDriver driver)
+        public BuildServerSteps(Driver driver)
         {
             m_Driver = driver;
         }
@@ -17,8 +17,8 @@ namespace XAmple.Specs.Steps
         [When(@"I retrieve the build version")]
         public void RetrieveBuildVersion_Step()
         {
-            var version = m_Driver.RetrieveBuildVersion();
-            ScenarioContext.Current.Set(version, ScenarioContextKeys.BuildVersion);
+            m_Driver
+                .RetrieveBuildVersion();
         }
     }
 }
