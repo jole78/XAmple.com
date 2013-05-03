@@ -75,11 +75,10 @@ function Deploy-WebPackage {
 function Sync-Servers {
 	try {
 		Write-Host " - Syncing site '$SitePath' to other servers..." -NoNewline
-		$Result = Sync-WDSite -ErrorAction:Stop `
+		$Result = Sync-WDApp -ErrorAction:Stop `
 			-SourcePublishSettings $PathToPrimaryServerPublishSettingsFile `
 			-DestinationPublishSettings $PathToSecondaryServerPublishSettingsFile `
-			-SourceSite $SitePath -DestinationSite $SitePath `
-			-IncludeAppPool:$false
+			-SourceApp $SitePath -DestinationApp $SitePath `
 			
 	} catch {
 		$exception = $_.Exception
