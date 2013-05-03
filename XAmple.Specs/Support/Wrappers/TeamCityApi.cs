@@ -28,7 +28,7 @@ namespace XAmple.Specs.Support.Wrappers
                          };
             var response = client.Get("/httpAuth/app/rest/builds", new
             {
-                locator = string.Format("buildType:{0},running:running", BuildTypeId),
+                locator = string.Format("buildType:{0},running:true", BuildTypeId),
                 guest = 1
             });
 
@@ -37,6 +37,7 @@ namespace XAmple.Specs.Support.Wrappers
 
             return new Version(buildNO);
         }
+
 
     }
 }
