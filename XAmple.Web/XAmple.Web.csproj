@@ -417,14 +417,14 @@
     <Content Include="Scripts\services.min.js">
       <DependentUpon>services.ts</DependentUpon>
     </Content>
+    <Content Include="Scripts\app.min.js">
+      <DependentUpon>app.ts</DependentUpon>
+    </Content>
     <Content Include="Scripts\typings\angularjs\angular-cookies.d.ts" />
     <Content Include="Scripts\typings\angularjs\angular-mocks.d.ts" />
     <Content Include="Scripts\typings\angularjs\angular-resource.d.ts" />
     <Content Include="Scripts\typings\angularjs\angular-sanitize.d.ts" />
     <Content Include="Scripts\typings\angularjs\angular.d.ts" />
-    <Content Include="Scripts\app.min.js">
-      <DependentUpon>app.ts</DependentUpon>
-    </Content>
     <Content Include="Scripts\typings\jquery\jquery.d.ts" />
     <Content Include="Web.config" />
   </ItemGroup>
