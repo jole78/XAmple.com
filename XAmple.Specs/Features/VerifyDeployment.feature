@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿Feature: Verifying a deployment
 
 # TODO
@@ -21,3 +22,13 @@ Examples:
 	| http://wfe1.test.example.com |
 	| http://wfe2.test.example.com |
 
+=======
+﻿
+Feature: Verify Deployment
+
+@environment.test
+Scenario: Verify that deployment to the test environment was successful
+	Given I have already retrieved the application version
+	When I retrieve the build version
+	Then the application version and the build version should match
+>>>>>>> 50936e173b1bbe559093c182e93ee64f170cc439

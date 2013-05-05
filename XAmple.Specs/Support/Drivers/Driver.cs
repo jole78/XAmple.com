@@ -30,6 +30,7 @@ namespace XAmple.Specs.Support.Drivers
             return this;
         }
 
+<<<<<<< HEAD
         public void ApplicationAndDesiredVersionsShouldMatch()
         {
             Assert.AreEqual(m_TeamCityApplicationVersion, m_ApplicationVersion);
@@ -40,5 +41,11 @@ namespace XAmple.Specs.Support.Drivers
             m_ApplicationApi.WithBaseAddress(url);
             return RetrieveApplicationVersion();
         }
+=======
+        public void ApplicationAndBuildVersionsShouldMatch()
+        {
+            Assert.AreEqual(m_TeamCityApplicationVersion, m_ApplicationVersion);
+        }
+>>>>>>> 50936e173b1bbe559093c182e93ee64f170cc439
     }
 }
