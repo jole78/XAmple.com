@@ -19,8 +19,8 @@ namespace XAmple.Specs.Features
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "1.9.0.77")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [NUnit.Framework.TestFixtureAttribute()]
-    [NUnit.Framework.DescriptionAttribute("Verify Deployment")]
-    public partial class VerifyDeploymentFeature
+    [NUnit.Framework.DescriptionAttribute("Verifying a deployment")]
+    public partial class VerifyingADeploymentFeature
     {
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
@@ -32,7 +32,7 @@ namespace XAmple.Specs.Features
         public virtual void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Verify Deployment", "", ProgrammingLanguage.CSharp, ((string[])(null)));
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Verifying a deployment", "", ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -64,21 +64,31 @@ namespace XAmple.Specs.Features
             testRunner.CollectScenarioErrors();
         }
         
-        [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Verify that deployment to the test environment was successful")]
-        [NUnit.Framework.CategoryAttribute("environment.test")]
-        public virtual void VerifyThatDeploymentToTheTestEnvironmentWasSuccessful()
+        public virtual void FeatureBackground()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Verify that deployment to the test environment was successful", new string[] {
-                        "environment.test"});
-#line 5
+#line 10
+#line 11
+ testRunner.Given("I have knowledge of the desired application version", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Verify that the application has been pushed to the entire farm")]
+        [NUnit.Framework.TestCaseAttribute("http://wfe1.test.example.com", new string[] {
+                "environment.test"})]
+        [NUnit.Framework.TestCaseAttribute("http://wfe2.test.example.com", new string[] {
+                "environment.test"})]
+        public virtual void VerifyThatTheApplicationHasBeenPushedToTheEntireFarm(string url, string[] exampleTags)
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Verify that the application has been pushed to the entire farm", exampleTags);
+#line 13
 this.ScenarioSetup(scenarioInfo);
-#line 6
- testRunner.Given("I have already retrieved the application version", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 7
- testRunner.When("I retrieve the build version", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 8
- testRunner.Then("the application version and the build version should match", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 10
+this.FeatureBackground();
+#line 14
+ testRunner.When(string.Format("I retrieve the current application version from {0}", url), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 15
+ testRunner.Then("the desired version should match the application version", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }

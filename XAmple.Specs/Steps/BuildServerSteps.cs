@@ -14,11 +14,5 @@ namespace XAmple.Specs.Steps
             m_Driver = driver;
         }
 
-        [When(@"I retrieve the build version")]
-        public void RetrieveBuildVersion_Step()
-        {
-            m_Driver
-                .RetrieveBuildVersion();
-        }
     }
 }

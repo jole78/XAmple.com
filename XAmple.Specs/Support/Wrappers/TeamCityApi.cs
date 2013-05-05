@@ -28,7 +28,7 @@ namespace XAmple.Specs.Support.Wrappers
                          };
             var response = client.Get("/httpAuth/app/rest/builds", new
             {
-                locator = string.Format("buildType:{0},running:true", BuildTypeId),
+                locator = string.Format("buildType:{0},running:any", BuildTypeId),
                 guest = 1,count=1
             });
 

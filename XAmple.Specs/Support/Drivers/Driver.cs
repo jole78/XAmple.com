@@ -30,9 +30,15 @@ namespace XAmple.Specs.Support.Drivers
             return this;
         }
 
-        public void ApplicationAndBuildVersionsShouldMatch()
+        public void ApplicationAndDesiredVersionsShouldMatch()
         {
             Assert.AreEqual(m_TeamCityApplicationVersion, m_ApplicationVersion);
+        }
+
+        public Driver RetrieveApplicationVersionFrom(string url)
+        {
+            m_ApplicationApi.WithBaseAddress(url);
+            return RetrieveApplicationVersion();
         }
     }
 }

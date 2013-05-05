@@ -16,11 +16,27 @@ namespace XAmple.Specs.Steps
             m_Driver = driver;
         }
 
-        [Then(@"the application version and the build version should match")]
+
+        [Given(@"I have knowledge of the desired application version")]
+        public void RetrieveBuildVersion_Step()
+        {
+            m_Driver
+                .RetrieveBuildVersion();
+        }
+
+        [When(@"I retrieve the current application version from (.*)")]
+        public void RetreiveApplicationVersionFrom_Step(string url)
+        {
+            m_Driver
+                .RetrieveApplicationVersionFrom(url);
+        }
+
+
+        [Then(@"the desired version should match the application version")]
         public void CompareVersions_Step()
         {
             m_Driver
-                .ApplicationAndBuildVersionsShouldMatch();
+                .ApplicationAndDesiredVersionsShouldMatch();
         }
 
     }

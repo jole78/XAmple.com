@@ -27,5 +27,11 @@ namespace XAmple.Specs.Support.Wrappers
 
             return version;
         }
+
+        public ApplicationApi WithBaseAddress(string url)
+        {
+            BaseAddress = url;
+            return this;
+        }
     }
 }
