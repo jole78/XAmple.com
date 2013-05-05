@@ -1,11 +1,10 @@
 ﻿using System;
 using FluentAssertions;
-using FluentAutomation;
 using Moq;
 using NUnit.Framework;
+using Nancy;
+using Nancy.Security;
 using Nancy.Testing;
-using Newtonsoft.Json;
-using TinyIoC;
 using XAmple.Web.Modules;
 using XAmple.Web.Services;
 
@@ -14,6 +13,8 @@ namespace XAmple.Web.Tests
     [TestFixture]
     public class VersionModuleTests
     {
+        // TODO: investigate why ApiUser object causes error
+
         [Test]
         public void TEST()
         {
@@ -31,32 +32,46 @@ namespace XAmple.Web.Tests
                 .Returns(new Version("1.0.0.1"));
 
             // WHEN
-            var response = browser.Get("/help/version");
+            var response = browser.Get("/about/version");
             
 
             // THEN
-            var json = JsonConvert.DeserializeObject<Version>(response.Body.AsString());
-
-            json.ToString().Should()
-                .BeEquivalentTo("1.0.0.1");
+            response
+                .StatusCode
+                .Should()
+                .Be(HttpStatusCode.Unauthorized);
 
         }
-    }
 
-    public class VersionModuleWrapper
-    {
-         
-    }
-
-    public class BrowserAutomation : FluentTest
-    {
-        public BrowserAutomation()
+        [Test]
+        public void TEST2()
         {
-            FluentAutomation.Settings.Registration = ConfigureContainer;
-        }
+            // GIVEN
+            var versionService = Mock.Of<IVersionService>();
 
-        private void ConfigureContainer(TinyIoCContainer container)
-        {
+            var browser = new Browser(cfg =>
+            {
+                cfg.Module<VersionModule>();
+                cfg.Dependency<IVersionService>(versionService);
+            });
+
+            Mock.Get(versionService)
+                .Setup(x => x.GetVersionInformation())
+                .Returns(new Version("1.0.0.1"));
+
+            // WHEN
+            var response = browser.Get("/about/version", x =>
+                                                         {
+                                                             x.Query("ApiKey","pass@word1");
+                                                         });
+
+            // THEN
+            response
+                .StatusCode
+                .Should()
+                .Be(HttpStatusCode.OK);
+
         }
     }
+
 }

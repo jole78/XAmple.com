@@ -1,4 +1,5 @@
 ﻿using Nancy;
+using Nancy.Security;
 using XAmple.Web.Services;
 
 namespace XAmple.Web.Modules
@@ -10,6 +11,9 @@ namespace XAmple.Web.Modules
         public VersionModule(IVersionService versionService)
             :base("/about/version")
         {
+            this.RequiresAuthentication();
+            this.RequiresClaims(new string[]{"ApiUser"});
+
             m_VersionService = versionService;
 
             Get["/"] = delegate(dynamic parameters)
