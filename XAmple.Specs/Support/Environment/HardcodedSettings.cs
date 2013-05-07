@@ -1,13 +1,13 @@
-﻿namespace XAmple.Specs.Support.Environments
+﻿namespace XAmple.Specs.Support.Environment
 {
-    public class HardcodedEnvironment : IEnvironment
+    public class HardcodedSettings : IEnvironmentSettings
     {
         public string ApplicationBaseAddress
         {
             get { return "http://test.xample.com"; }
         }
 
-        public string TeamCityBaseAddress
+        public string TeamCityBaseUri
         {
             get { return "http://teamcity.virjole.local"; }
         }

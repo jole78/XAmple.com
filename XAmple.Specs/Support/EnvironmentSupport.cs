@@ -1,6 +1,6 @@
 ﻿using BoDi;
 using TechTalk.SpecFlow;
-using XAmple.Specs.Support.Environments;
+using XAmple.Specs.Support.Environment;
 
 namespace XAmple.Specs.Support
 {
@@ -17,19 +17,20 @@ namespace XAmple.Specs.Support
         [BeforeScenario]
         public void InitializeEnvironment()
         {
-
+            // settings are hardcoded
 #if DEBUG
-{
-    var configuration = new HardcodedEnvironment();
-    m_Container.RegisterInstanceAs<IEnvironment>(configuration);
-}
+            {
+                var settings = new HardcodedSettings();
+                m_Container.RegisterInstanceAs<IEnvironmentSettings>(settings);
+            }
 #endif
 
+            // enables the user to configure the settings via xml
 #if RELEASE
-{
-    var configuration = new ConfigurableEnvironment();
-    m_Container.RegisterInstanceAs<IEnvironment>(configuration);
-}
+            {
+                var settings = new ConfigurableSettings();
+                m_Container.RegisterInstanceAs<IEnvironmentSettings>(settings);
+            }
 #endif
 
         }
