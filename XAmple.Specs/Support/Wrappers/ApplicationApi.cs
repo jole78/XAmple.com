@@ -1,23 +1,22 @@
 ﻿using System;
 using EasyHttp.Http;
 using Newtonsoft.Json;
+using XAmple.Specs.Support.Environments;
 
 namespace XAmple.Specs.Support.Wrappers
 {
     public class ApplicationApi
     {
-        public static Action<ApplicationApi> OnCreating = delegate { };
+        private readonly IEnvironment m_Environment;
 
-        public string BaseAddress { get; set; }
-
-        public ApplicationApi()
+        public ApplicationApi(IEnvironment environment)
         {
-            OnCreating(this);
+            m_Environment = environment;
         }
 
         public Version GetVersion()
         {
-            var client = new HttpClient(BaseAddress)
+            var client = new HttpClient(m_Environment.ApplicationBaseAddress)
                          {
                              Request = { Accept = HttpContentTypes.ApplicationJson }
                          };
@@ -30,7 +29,8 @@ namespace XAmple.Specs.Support.Wrappers
 
         public ApplicationApi WithBaseAddress(string url)
         {
-            BaseAddress = url;
+            //BaseAddress = url;
+            throw new NotImplementedException();
             return this;
         }
     }

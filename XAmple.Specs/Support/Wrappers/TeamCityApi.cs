@@ -1,34 +1,29 @@
 ﻿using System;
 using EasyHttp.Http;
+using XAmple.Specs.Support.Environments;
 
 namespace XAmple.Specs.Support.Wrappers
 {
     public class TeamCityApi
     {
-        public static Action<TeamCityApi> OnCreating = delegate { };
+        private readonly IEnvironment m_Environment;
 
-        public string BaseAddress { get; set; }
-        public string BuildTypeId { get; set; }
-        public Action<HttpClient> OnBeforeRequest = delegate { };
-        public Action<UriBuilder> OnCreatingGetRunningBuildUrl = delegate { };
-         
-
-        public TeamCityApi()
+        public TeamCityApi(IEnvironment environment)
         {
-            OnCreating(this);
+            m_Environment = environment;
         }
 
         public Version GetRunningBuildVersion()
         {
             //TODO: fix OnBeforeRequest and OnCreatingGetRunningBuildUrl
 
-            var client = new HttpClient(BaseAddress)
+            var client = new HttpClient(m_Environment.TeamCityBaseAddress)
                          {
                             Request = {Accept = HttpContentTypes.ApplicationJson}
                          };
             var response = client.Get("/httpAuth/app/rest/builds", new
             {
-                locator = string.Format("buildType:{0},running:true", BuildTypeId),
+                locator = string.Format("buildType:{0},running:true", m_Environment.BuildTypeId),
                 guest = 1
             });
 

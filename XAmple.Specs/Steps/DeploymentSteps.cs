@@ -1,23 +1,22 @@
-﻿using System;
-using NUnit.Framework;
-using TechTalk.SpecFlow;
+﻿using TechTalk.SpecFlow;
 using XAmple.Specs.Support.Drivers;
 
 namespace XAmple.Specs.Steps
 {
 
     [Binding]
-    public class VerifyDeploymentSteps
+    public class DeploymentSteps
     {
         private readonly Driver m_Driver;
 
-        public VerifyDeploymentSteps(Driver driver)
+        public DeploymentSteps(Driver driver)
         {
             m_Driver = driver;
         }
 
 
-        [Given(@"I have knowledge of the desired application version")]
+        [Given(@"the build server's application version")]
+       // [Given(@"I have knowledge of the desired application version")]
         public void RetrieveBuildVersion_Step()
         {
             m_Driver
