@@ -67,20 +67,19 @@ namespace XAmple.Specs.Features
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Verifying that a deployment was successful")]
-        public virtual void VerifyingThatADeploymentWasSuccessful()
+        [NUnit.Framework.DescriptionAttribute("Making sure that all the servers in the web farm have the same version of the app" +
+            "lication")]
+        public virtual void MakingSureThatAllTheServersInTheWebFarmHaveTheSameVersionOfTheApplication()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Verifying that a deployment was successful", ((string[])(null)));
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Making sure that all the servers in the web farm have the same version of the app" +
+                    "lication", ((string[])(null)));
 #line 4
 this.ScenarioSetup(scenarioInfo);
 #line 5
- testRunner.Given("the build server\'s application version", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.When("I have collected the application version from each of the servers in the web farm" +
+                    "", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 6
- testRunner.When("collecting the application version from all the servers", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 7
  testRunner.Then("they should all be equal", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 8
- testRunner.And("the first of them should match the build server version", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
         }

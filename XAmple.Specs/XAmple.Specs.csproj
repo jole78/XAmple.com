@@ -72,11 +72,12 @@
     <Compile Include="Support\Environment\ConfigurableSettings.cs" />
     <Compile Include="Support\Environment\IEnvironmentSettings.cs" />
     <Compile Include="Support\Environment\HardcodedSettings.cs" />
-    <Compile Include="Support\EnvironmentSupport.cs" />
+    <Compile Include="Support\EnvironmentSettingsSupport.cs" />
     <Compile Include="Steps\DeploymentSteps.cs" />
-    <Compile Include="Support\Wrappers\ApplicationApi.cs" />
+    <Compile Include="Support\Wrappers\WebApplicationApi.cs" />
     <Compile Include="Support\Drivers\Driver.cs" />
     <Compile Include="Support\Wrappers\TeamCityApi.cs" />
+    <Compile Include="Support\Wrappers\WebFarm.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

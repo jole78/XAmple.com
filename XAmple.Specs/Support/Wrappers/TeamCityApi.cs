@@ -18,7 +18,7 @@ namespace XAmple.Specs.Support.Wrappers
             //TODO: add authentication (remove guest=1)
             //TODO: add basic auth (user + pass)
 
-            var client = new HttpClient(m_Settings.TeamCityBaseUri)
+            var client = new HttpClient(m_Settings.TeamCityBaseUrl)
                          {
                             Request = {Accept = HttpContentTypes.ApplicationJson}
                          };

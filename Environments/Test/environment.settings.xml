@@ -1,0 +1,12 @@
+<Settings>
+  <TeamCity>
+    <Url>http://teamcity.virjole.local</Url>
+    <BuildTypeId>bt3</BuildTypeId>
+  </TeamCity>
+  <WebApplication>
+    <LoadBalancedUrl>http://test.xample.com</LoadBalancedUrl>
+    <Url>http://wfe1.test.example.com</Url>
+    <Url>http://wfe2.test.example.com</Url>
+  </WebApplication>
+  
+</Settings>

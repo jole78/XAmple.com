@@ -1,4 +1,7 @@
-﻿using System.Xml.Linq;
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using System.Xml.Linq;
 
 namespace XAmple.Specs.Support.Environment
 {
@@ -8,15 +11,18 @@ namespace XAmple.Specs.Support.Environment
 
         public ConfigurableSettings()
         {
-            m_Settings = XElement.Load(@".\environment.settings.xml").ToDynamic();
+            // TODO: a bit hardcoded perhaps
+            m_Settings = XElement
+                .Load(@".\environment.settings.xml")
+                .ToDynamic();
         }
 
-        public string ApplicationBaseAddress
+        public string LoadBalancedApplicationUrl
         {
-            get { return m_Settings.WebApplication.Url; }
+            get { return m_Settings.WebApplication.LoadBalancedUrl; }
         }
 
-        public string TeamCityBaseUri
+        public string TeamCityBaseUrl
         {
             get { return m_Settings.TeamCity.Url; }
         }
@@ -26,6 +32,16 @@ namespace XAmple.Specs.Support.Environment
             get { return m_Settings.TeamCity.BuildTypeId; }
         }
 
+        public IEnumerable<string> InternalApplicationUrls
+        {
+            get
+            {
+                // TODO: hardcoded to xml, is it OK??
+                IEnumerable<XElement> urls = m_Settings.WebApplication.Url;
+                return urls.Select(x => x.Value);
+
+            }
+        }
     }
 
     

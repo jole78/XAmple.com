@@ -21,7 +21,9 @@ using System.Text;
 using System.Dynamic;
 using System.Collections;
 
+// ReSharper disable CheckNamespace
 namespace System.Xml.Linq
+// ReSharper restore CheckNamespace
 {
 	/// <summary>
 	/// Provides the <see cref="ToDynamic"/> extension method for 

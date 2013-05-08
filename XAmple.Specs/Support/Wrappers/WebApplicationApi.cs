@@ -5,18 +5,21 @@ using XAmple.Specs.Support.Environment;
 
 namespace XAmple.Specs.Support.Wrappers
 {
-    public class ApplicationApi
+    /// <summary>
+    /// Accessing the webapplication via its API
+    /// </summary>
+    public class WebApplicationApi
     {
-        private readonly IEnvironmentSettings m_Settings;
+        private string m_BaseUri;
 
-        public ApplicationApi(IEnvironmentSettings settings)
+        public WebApplicationApi(IEnvironmentSettings settings)
         {
-            m_Settings = settings;
+            m_BaseUri = settings.LoadBalancedApplicationUrl;
         }
 
         public Version GetVersion()
         {
-            var client = new HttpClient(m_Settings.ApplicationBaseAddress)
+            var client = new HttpClient(m_BaseUri)
                          {
                              Request = { Accept = HttpContentTypes.ApplicationJson }
                          };
@@ -27,12 +30,13 @@ namespace XAmple.Specs.Support.Wrappers
             return version;
         }
 
-        public ApplicationApi WithBaseAddress(string url)
+        public void UsingBaseAddress(string address, Action<WebApplicationApi> action)
         {
-            // TODO: not done thinking here
-            //BaseAddress = url;
-            throw new NotImplementedException();
-            return this;
+            var before = m_BaseUri;
+            m_BaseUri = address;
+            action(this);
+            m_BaseUri = before;
         }
+
     }
 }

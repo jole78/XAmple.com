@@ -5,11 +5,11 @@ using XAmple.Specs.Support.Environment;
 namespace XAmple.Specs.Support
 {
     [Binding]
-    public class EnvironmentSupport
+    public class EnvironmentSettingsSupport
     {
         private static IObjectContainer m_Container;
 
-        public EnvironmentSupport(IObjectContainer container)
+        public EnvironmentSettingsSupport(IObjectContainer container)
         {
             m_Container = container;
         }
