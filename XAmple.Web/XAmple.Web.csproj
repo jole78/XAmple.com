@@ -45,6 +45,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Nancy.0.17.1\lib\net40\Nancy.dll</HintPath>
     </Reference>
+    <Reference Include="Nancy.Authentication.Stateless">
+      <HintPath>..\packages\Nancy.Authentication.Stateless.0.17.1\lib\net40\Nancy.Authentication.Stateless.dll</HintPath>
+    </Reference>
     <Reference Include="Nancy.Hosting.Aspnet, Version=0.17.1.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Nancy.Hosting.Aspnet.0.17.1\lib\net40\Nancy.Hosting.Aspnet.dll</HintPath>
@@ -414,18 +417,19 @@
     <Content Include="Scripts\services.min.js">
       <DependentUpon>services.ts</DependentUpon>
     </Content>
+    <Content Include="Scripts\app.min.js">
+      <DependentUpon>app.ts</DependentUpon>
+    </Content>
     <Content Include="Scripts\typings\angularjs\angular-cookies.d.ts" />
     <Content Include="Scripts\typings\angularjs\angular-mocks.d.ts" />
     <Content Include="Scripts\typings\angularjs\angular-resource.d.ts" />
     <Content Include="Scripts\typings\angularjs\angular-sanitize.d.ts" />
     <Content Include="Scripts\typings\angularjs\angular.d.ts" />
-    <Content Include="Scripts\app.min.js">
-      <DependentUpon>app.ts</DependentUpon>
-    </Content>
     <Content Include="Scripts\typings\jquery\jquery.d.ts" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApiUser.cs" />
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Modules\HelpModule.cs" />
     <Compile Include="Services\IVersionService.cs" />
