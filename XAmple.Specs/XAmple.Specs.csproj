@@ -27,7 +27,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
+    <DefineConstants>TRACE;RELEASE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -49,6 +49,7 @@
       <HintPath>..\packages\NUnit.2.6.2\lib\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
@@ -61,26 +62,28 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Features\VerifyDeployment.feature.cs">
+    <Compile Include="Features\Deployment.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>VerifyDeployment.feature</DependentUpon>
+      <DependentUpon>Deployment.feature</DependentUpon>
     </Compile>
+    <Compile Include="netfx\System\Xml\Linq\DynamicXml.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Steps\ApplicationSteps.cs" />
-    <Compile Include="Steps\BuildServerSteps.cs" />
-    <Compile Include="Steps\TestEnvironmentEvents.cs" />
-    <Compile Include="Steps\Transformations.cs" />
-    <Compile Include="Steps\VerifyDeploymentSteps.cs" />
-    <Compile Include="Support\Wrappers\ApplicationApi.cs" />
+    <Compile Include="Support\Environment\ConfigurableSettings.cs" />
+    <Compile Include="Support\Environment\IEnvironmentSettings.cs" />
+    <Compile Include="Support\Environment\HardcodedSettings.cs" />
+    <Compile Include="Support\EnvironmentSettingsSupport.cs" />
+    <Compile Include="Steps\DeploymentSteps.cs" />
+    <Compile Include="Support\Wrappers\WebApplicationApi.cs" />
     <Compile Include="Support\Drivers\Driver.cs" />
     <Compile Include="Support\Wrappers\TeamCityApi.cs" />
+    <Compile Include="Support\Wrappers\WebFarm.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="Features\VerifyDeployment.feature">
+    <None Include="Features\Deployment.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>VerifyDeployment.feature.cs</LastGenOutput>
+      <LastGenOutput>Deployment.feature.cs</LastGenOutput>
     </None>
     <None Include="packages.config" />
   </ItemGroup>
