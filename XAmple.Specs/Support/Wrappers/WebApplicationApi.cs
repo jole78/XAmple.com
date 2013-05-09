@@ -24,7 +24,12 @@ namespace XAmple.Specs.Support.Wrappers
                              Request = { Accept = HttpContentTypes.ApplicationJson }
                          };
 
-            var response = client.Get("/about/version");
+            var response = client.Get("/about/version",
+                                      new
+                                      {
+                                          // TODO: should be in settings right!?
+                                          apiKey="pass@ord1"
+                                      });
             var version = JsonConvert.DeserializeObject<Version>(response.RawText);
 
             return version;
