@@ -5,8 +5,8 @@
   </TeamCity>
   <WebApplication>
     <LoadBalancedUrl>http://test.xample.com</LoadBalancedUrl>
-    <Url>http://wfe1.test.example.com</Url>
-    <Url>http://wfe2.test.example.com</Url>
+    <Url>http://wfe1.test.xample.com</Url>
+    <Url>http://wfe2.test.xample.com</Url>
   </WebApplication>
   
 </Settings>
