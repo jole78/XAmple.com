@@ -28,7 +28,7 @@ namespace XAmple.Specs.Support.Wrappers
                                       new
                                       {
                                           // TODO: should be in settings right!?
-                                          apiKey="pass@ord1"
+                                          apiKey="pass@word1"
                                       });
             var version = JsonConvert.DeserializeObject<Version>(response.RawText);
 
