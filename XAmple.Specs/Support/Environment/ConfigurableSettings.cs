@@ -11,7 +11,6 @@ namespace XAmple.Specs.Support.Environment
 
         public ConfigurableSettings()
         {
-            // TODO: a bit hardcoded perhaps
             m_Settings = XElement
                 .Load(@".\environment.settings.xml")
                 .ToDynamic();
@@ -36,7 +35,6 @@ namespace XAmple.Specs.Support.Environment
         {
             get
             {
-                // TODO: hardcoded to xml, is it OK??
                 IEnumerable<XElement> urls = m_Settings.WebApplication.Url;
                 return urls.Select(x => x.Value);
 
