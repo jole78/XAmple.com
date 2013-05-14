@@ -21,30 +21,32 @@ namespace XAmple.Specs.Steps
                 .RetrieveApplicationVersions();
         }
 
+        [When(@"I have retrieved the deployed application version")]
+        public void RetrieveDeployedApplicationVersion_Step()
+        {
+            m_Driver
+                .RetrieveDeployedApplicationVersion();
+        }
+
+        [When(@"I have also retrieved the application version from the build server")]
+        public void RetrieveBuildServersApplicationVersion_Step()
+        {
+            m_Driver
+                .RetrieveBuildServersApplicationVersion();
+        }
+
         [Then(@"they should all be equal")]
-        public void ThenTheyShouldAllBeEqual_Step()
+        public void ApplicationVersionsShouldBeEqual_Step()
         {
             m_Driver
                 .ApplicationVersionsShouldBeEqual();
         }
 
-
-
-        [Given(@"the build server's application version")]
-       // [Given(@"I have knowledge of the desired application version")]
-        public void RetrieveBuildVersion_Step()
+        [Then(@"they should match")]
+        public void DeployedAndBuildServerVersionsShouldMatch_Step()
         {
             m_Driver
-                .RetrieveBuildVersion();
-        }
-
-
-
-        [Then(@"the desired version should match the application version")]
-        public void CompareVersions_Step()
-        {
-            m_Driver
-                .ApplicationAndDesiredVersionsShouldMatch();
+                .DeployedAndBuildServerVersionsShouldMatch();
         }
 
 
