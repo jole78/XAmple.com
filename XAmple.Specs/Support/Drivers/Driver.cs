@@ -14,8 +14,8 @@ namespace XAmple.Specs.Support.Drivers
         private readonly WebFarm m_WebFarm;
 
         private Version m_TeamCityApplicationVersion;
-        private List<Version> m_ApplicationVersions;
-        private Version m_ApplicationVersion;
+        private readonly List<Version> m_ApplicationVersions;
+        private Version m_DeployedApplicationVersion;
 
         public Driver(TeamCityApi teamCityApi, WebApplicationApi webApplicationApi, WebFarm webFarm)
         {
@@ -25,27 +25,21 @@ namespace XAmple.Specs.Support.Drivers
             m_ApplicationVersions = new List<Version>();
         }
 
-        public Driver RetrieveBuildVersion()
+        public Driver RetrieveBuildServersApplicationVersion()
         {
             m_TeamCityApplicationVersion = m_TeamCityApi.GetRunningBuildVersion();
             return this;
         }
 
-        public Driver RetrieveApplicationVersion()
+        public void DeployedAndBuildServerVersionsShouldMatch()
         {
-            m_ApplicationVersion = m_WebApplicationApi.GetVersion();
-            return this;
-        }
-
-        public void ApplicationAndDesiredVersionsShouldMatch()
-        {
-            Assert.AreEqual(m_TeamCityApplicationVersion, m_ApplicationVersion);
+            Assert.AreEqual(m_TeamCityApplicationVersion, m_DeployedApplicationVersion);
         }
 
 
         public void ApplicationAndBuildVersionsShouldMatch()
         {
-            Assert.AreEqual(m_TeamCityApplicationVersion, m_ApplicationVersion);
+            Assert.AreEqual(m_TeamCityApplicationVersion, m_DeployedApplicationVersion);
         }
 
 
@@ -75,6 +69,12 @@ namespace XAmple.Specs.Support.Drivers
                 .Should()
                 .HaveCount(1);
 
+            return this;
+        }
+
+        public Driver RetrieveDeployedApplicationVersion()
+        {
+            m_DeployedApplicationVersion = m_WebApplicationApi.GetVersion();
             return this;
         }
     }
