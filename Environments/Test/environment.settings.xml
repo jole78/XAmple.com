@@ -2,6 +2,9 @@
   <TeamCity>
     <Url>http://teamcity.virjole.local</Url>
     <BuildTypeId>bt3</BuildTypeId>
+    <Authenticate>false</Authenticate>
+    <User />
+    <Pwd />
   </TeamCity>
   <WebApplication>
     <LoadBalancedUrl>http://test.xample.com</LoadBalancedUrl>

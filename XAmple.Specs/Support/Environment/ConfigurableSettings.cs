@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
 
@@ -7,11 +6,10 @@ namespace XAmple.Specs.Support.Environment
 {
     public class ConfigurableSettings : IEnvironmentSettings
     {
-        private readonly dynamic m_Settings;
+        readonly dynamic m_Settings;
 
         public ConfigurableSettings()
         {
-            // TODO: a bit hardcoded perhaps
             m_Settings = XElement
                 .Load(@".\environment.settings.xml")
                 .ToDynamic();
@@ -24,25 +22,44 @@ namespace XAmple.Specs.Support.Environment
 
         public string TeamCityBaseUrl
         {
-            get { return m_Settings.TeamCity.Url; }
+            get { return TeamCitySection.Url; }
         }
 
         public string BuildTypeId
         {
-            get { return m_Settings.TeamCity.BuildTypeId; }
+            get { return TeamCitySection.BuildTypeId; }
         }
 
         public IEnumerable<string> InternalApplicationUrls
         {
             get
             {
-                // TODO: hardcoded to xml, is it OK??
                 IEnumerable<XElement> urls = m_Settings.WebApplication.Url;
                 return urls.Select(x => x.Value);
 
             }
         }
+
+        public bool TeamCityRequiresAuthentication
+        {
+            get { return TeamCitySection.Authenticate; }
+        }
+
+        public string TeamCityUserName
+        {
+            get { return TeamCitySection.User; }
+        }
+
+        public string TeamCityPassword
+        {
+            get { return TeamCitySection.Pwd; }
+        }
+
+        dynamic TeamCitySection
+        {
+            get { return m_Settings.TeamCity; }
+        }
     }
 
-    
+
 }

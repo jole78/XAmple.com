@@ -30,5 +30,11 @@ namespace XAmple.Specs.Support.Environment
                        };
             }
         }
+
+        public bool TeamCityRequiresAuthentication { get { return false; } }
+
+        public string TeamCityUserName { get { return "api"; } }
+
+        public string TeamCityPassword { get { return "pass@word1"; } }
     }
 }
