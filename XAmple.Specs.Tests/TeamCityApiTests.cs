@@ -101,7 +101,11 @@ namespace XAmple.Specs.Tests
         It should_not_try_to_set_basic_authentication = () =>
         {
             Mock.Get(TeamCityApi)
-                .Verify(x => x.ConfigureForBasicAuthentication(Moq.It.IsAny<HttpClient>(), "api", "pass@word1"),Times.Never());
+                .Verify(
+                    x =>
+                    x.ConfigureForBasicAuthentication(Moq.It.IsAny<HttpClient>(), Moq.It.IsAny<string>(),
+                                                      Moq.It.IsAny<string>()),
+                    Times.Never());
         };
 
         It should_not_try_to_force_basic_authentication = () =>
