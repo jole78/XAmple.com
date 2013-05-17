@@ -8,5 +8,8 @@ namespace XAmple.Specs.Support.Environment
         string TeamCityBaseUrl { get; }
         string BuildTypeId { get; }
         IEnumerable<string> InternalApplicationUrls { get; }
+        bool TeamCityRequiresAuthentication { get; }
+        string TeamCityUserName { get; }
+        string TeamCityPassword { get; }
     }
 }
