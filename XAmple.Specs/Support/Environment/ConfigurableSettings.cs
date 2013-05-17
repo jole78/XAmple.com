@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
 
@@ -7,7 +6,7 @@ namespace XAmple.Specs.Support.Environment
 {
     public class ConfigurableSettings : IEnvironmentSettings
     {
-        private readonly dynamic m_Settings;
+        readonly dynamic m_Settings;
 
         public ConfigurableSettings()
         {
@@ -23,12 +22,12 @@ namespace XAmple.Specs.Support.Environment
 
         public string TeamCityBaseUrl
         {
-            get { return m_Settings.TeamCity.Url; }
+            get { return TeamCitySection.Url; }
         }
 
         public string BuildTypeId
         {
-            get { return m_Settings.TeamCity.BuildTypeId; }
+            get { return TeamCitySection.BuildTypeId; }
         }
 
         public IEnumerable<string> InternalApplicationUrls
@@ -40,7 +39,27 @@ namespace XAmple.Specs.Support.Environment
 
             }
         }
+
+        public bool TeamCityRequiresAuthentication
+        {
+            get { return TeamCitySection.Authenticate; }
+        }
+
+        public string TeamCityUserName
+        {
+            get { return TeamCitySection.User; }
+        }
+
+        public string TeamCityPassword
+        {
+            get { return TeamCitySection.Pwd; }
+        }
+
+        dynamic TeamCitySection
+        {
+            get { return m_Settings.TeamCity; }
+        }
     }
 
-    
+
 }
