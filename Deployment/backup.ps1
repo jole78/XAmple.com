@@ -5,6 +5,14 @@
 	[string]$PathToBackupLocation
 )
 
+if($Env:TEAMCITY_DATA_PATH) {
+	$Script:OnBeforeBackup = [System.Action] { 
+		Remove-Item .\Backups -Force -Recurse
+	}
+} else {
+	$Script:OnBeforeBackup = [System.Action] { }
+}
+
 
 function Ensure-WDPowerShellMode {
 	$WDPowerShellSnapin = Get-PSSnapin -Name WDeploySnapin3.0 -ErrorAction:SilentlyContinue
@@ -44,6 +52,7 @@ function Build-BackupParameters {
 
 function Backup {
 	try {
+		$OnBeforeBackup.Invoke()
 		Write-Host " - Executing a backup of site '$ApplicationName'..." -NoNewline
 		$Parameters = Build-BackupParameters
 		$Result = Backup-WDApp @Parameters -ErrorAction:Stop
@@ -61,8 +70,7 @@ function Backup {
 	# Backup Location = $Result.Package 
 }
 
-try {
-	
+try {	
 	Ensure-WDPowerShellMode
 	Backup	
 	
