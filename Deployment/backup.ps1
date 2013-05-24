@@ -5,6 +5,12 @@
 	[string]$PathToBackupLocation
 )
 
+function AfterBackup([string] $Path) {
+	if($Env:TEAMCITY_DATA_PATH) {
+		Write-Host "##teamcity[publishArtifacts '$Path']"
+	}
+}
+
 function Ensure-WDPowerShellMode {
 	$WDPowerShellSnapin = Get-PSSnapin -Name WDeploySnapin3.0 -ErrorAction:SilentlyContinue
 	
@@ -46,6 +52,7 @@ function Backup {
 		Write-Host " - Executing a backup of site '$ApplicationName'..." -NoNewline
 		$Parameters = Build-BackupParameters
 		$Result = Backup-WDApp @Parameters -ErrorAction:Stop
+		AfterBackup -Path $Result.Package
 			
 	} catch {
 		$exception = $_.Exception
@@ -56,8 +63,6 @@ function Backup {
 	Write-Host "OK" -ForegroundColor Green
 	Write-Host "Summary:"
 	$Result | Out-String	
-	
-	# Backup Location = $Result.Package 
 }
 
 try {	
