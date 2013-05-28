@@ -89,6 +89,7 @@
       <LastGenOutput>Deployment.feature.cs</LastGenOutput>
     </None>
     <None Include="packages.config" />
+    <None Include="runner.ps1" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Support\Builders\" />
