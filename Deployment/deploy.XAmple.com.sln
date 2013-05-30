@@ -3,10 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XAmple.Deploy", "XAmple.Deploy\XAmple.Deploy.csproj", "{EDBC0CF9-FBCF-4CD4-8EE9-FCB3BEB32328}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{51327E5A-B86C-4D22-B2B3-3E221F4DB8CE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XAmple.Deploy.IntegrationTests", "XAmple.Deploy.IntegrationTests\XAmple.Deploy.IntegrationTests.csproj", "{8F71004D-8733-4F75-BA9C-001F29FAEF8E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{7ECED0B9-7613-44F4-A700-AA6F6A298C50}"
 	ProjectSection(SolutionItems) = preProject
-		deploy.bat = deploy.bat
-		deploy.ps1 = deploy.ps1
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
 Global
@@ -19,11 +22,12 @@ Global
 		{EDBC0CF9-FBCF-4CD4-8EE9-FCB3BEB32328}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EDBC0CF9-FBCF-4CD4-8EE9-FCB3BEB32328}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EDBC0CF9-FBCF-4CD4-8EE9-FCB3BEB32328}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8F71004D-8733-4F75-BA9C-001F29FAEF8E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F71004D-8733-4F75-BA9C-001F29FAEF8E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F71004D-8733-4F75-BA9C-001F29FAEF8E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F71004D-8733-4F75-BA9C-001F29FAEF8E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{EDBC0CF9-FBCF-4CD4-8EE9-FCB3BEB32328} = {51327E5A-B86C-4D22-B2B3-3E221F4DB8CE}
 	EndGlobalSection
 EndGlobal
