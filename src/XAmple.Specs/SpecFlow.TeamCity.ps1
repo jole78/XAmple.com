@@ -1,10 +1,10 @@
 ﻿param (
-	$NUnitConsolePath,
+	[string]$PathToNUnitConsole = $(throw 'Required- need path to nunit-console.exe'),
+	[string]$PathToSpecFlowExe = $(throw 'Required- need path to specflow.exe'),
 	$dll,
-	$SpecFlowExePath,
-	$csproj
+	$csproj,
+	$Categories
 )
-
 
 #"C:\Program Files (x86)\NUnit 2.5.10\bin\net-2.0\nunit-console.exe" /labels /out=TestResult.txt /xml=TestResult.xml /framework=net-4.0 Bowling.Specflow\bin\Debug\Bowling.Specflow.dll
 # 
@@ -20,8 +20,8 @@
 
 #specflow.exe nunitexecutionreport BookShop.AcceptanceTests.csproj /out:MyResult.html
 
-function Execute-NUnit {
-	$exe = $NUnitConsolePath
+function Execute-NUnitConsoleExe {
+	$exe = $PathToNUnitConsole
 	$parameters = @()
 	
 	$parameters += "$dll"
@@ -32,19 +32,16 @@ function Execute-NUnit {
 	&$exe $parameters
 }
 
-function Execute-SpecFlow {
-	cls
-	$exe = $SpecFlowExePath
+function Execute-SpecFlowExe {
+	$exe = $PathToSpecFlowExe
 	
 	$parameters = @()
 	
 	$parameters += "nunitexecutionreport"
 	$parameters += $csproj
-	$parameters += "/out:SpecFlowResults.html"
 	
 	&$exe $parameters
 }
 
-cls
-Execute-NUnit
-Execute-SpecFlow
+Execute-NUnitConsoleExe
+Execute-SpecFlowExe
