@@ -1,6 +1,6 @@
 ﻿
 
-function Properties {
+function Set-Properties {
 	param(
 		[HashTable]$properties
 	)
@@ -35,23 +35,25 @@ function Parse-Arguments {
 
 	$args = @{}
 	
-	$proj = Get-ChildItem -File "*.*proj"
+	$proj = Get-ProjectInformation
 	
 	# Path to xxx.csproj
 	if($cfg.PathToProjectFile) {
-		# todo: test-path
+		if(Test-Path $cfg.PathToProjectFile -PathType:Leaf) {
 		$args.PathToProjectFile = $cfg.PathToProjectFile
+		} else { throw "Failed to find a project file at location '$($cfg.PathToProjectFile)'" }
 	} else {
-		$args.PathToProjectFile = $proj.FullName
+		$args.PathToProjectFile = $proj.PathToProjectFile
 	}
 	
 	# Path to xxx.dll or xxx.csproj
 	if($cfg.PathToAssemblyOrProject) {
-		# todo: test-path
-		$args.PathToAssemblyOrProject = $cfg.PathToAssemblyOrProject
+		if(Test-Path $cfg.PathToAssemblyOrProject -PathType:Leaf) {
+			$args.PathToAssemblyOrProject = $cfg.PathToAssemblyOrProject
+		} else { throw "Failed to find an assembly or project file at location '$($cfg.PathToAssemblyOrProject)'" }
 	} else {
 		# Finds the dll in the 'bin' folder under the specified configuration [default: Release]
-		$args.PathToAssemblyOrProject = Get-ChildItem -File -Recurse "$($proj.BaseName).dll" | Where-Object {
+		$args.PathToAssemblyOrProject = Get-ChildItem -File -Recurse $proj.AssemblyName | Where-Object {
 			($_.Directory.Parent.Name -eq "bin") -and ($_.Directory.Name -eq $cfg.Configuration)
 		} | Select-Object -First 1
 	}	
@@ -69,8 +71,7 @@ function Invoke-NUnitConsoleExe {
 	if($cfg.PathToNUnitConsoleExe) {
 		$exe = $cfg.PathToNUnitConsoleExe
 	} else {
-		#TODO: need to find packages folder
-		$exe = "..\packages\NUnit.Runners.2.6.2\tools\nunit-console.exe"
+		$exe = Find-NUnitConsoleExe
 	}
 	
 	if(Test-Path $exe -PathType:Leaf) {
@@ -105,23 +106,22 @@ function Invoke-SpecFlowExe {
 	if(Test-Path .\TestResult.txt -PathType:Leaf) {
 		$out.NUnitOutput = Get-Item .\TestResult.txt
 	} else {
-		throw "Failed to find nunit output'"
+		throw "Failed to find nunit output"
 	}
 	
 	# Report from NUnit
 	if(Test-Path .\TestResult.xml -PathType:Leaf) {
 		$out.NUnitReport = Get-Item .\TestResult.xml
 	} else {
-		throw "Failed to find nunit report'"
+		throw "Failed to find nunit report"
 	}
 	
 	# Path to specflow.exe
 	if($cfg.PathToSpecFlowExe) {
 		$exe = $cfg.PathToSpecFlowExe
 	} else {
-		#TODO: need to find packages folder
-		$exe = "..\packages\SpecFlow.1.9.0\tools\specflow.exe"
-	}
+		$exe = Find-SpecFlowExe
+	}	
 	
 	if(Test-Path $exe -PathType:Leaf) {
 		try {
@@ -152,6 +152,55 @@ function Invoke-SpecFlowExe {
 	} else {
 		throw "Failed to find 'specflow.exe' at location '$exe'"
 	}
+}
+
+function Get-PackagesFolder{
+	$packages = Get-ChildItem -Directory -Path ..\ packages
+	if($packages -eq $null){
+		throw "Failed to find the packages folder at the default location: '..\'"
+	}
+	
+	return $packages
+}
+
+function Get-ProjectInformation{
+	$proj = Get-ChildItem -File "*.*proj" | Select-Object -First 1
+	if($proj -eq $null){
+		throw "Failed to find the project file (*.*proj)"
+	}
+	
+	return @{
+		PathToProjectFile = $proj.FullName
+		AssemblyName = "$($proj.BaseName).dll"
+	}
+}
+
+function Find-SpecFlowExe{
+		
+	$packages = Get-PackagesFolder
+	#TODO: need to append the version like
+	#SpecFlow.1.9.0
+	
+	$specflow_exe = Get-ChildItem -File -Recurse -Path $packages.FullName specflow.exe
+	if($specflow_exe -eq $null){
+		throw "Failed to find specflow.exe in the packages folder: '$($packages.FullName)'"
+	}
+	
+	return $specflow_exe.FullName
+}
+
+function Find-NUnitConsoleExe{
+		
+	$packages = Get-PackagesFolder
+	#TODO: need to append the version like
+	#NUnit.Runners.2.6.2
+	
+	$nunit_console_exe = Get-ChildItem -File -Recurse -Path $packages.FullName nunit-console.exe
+	if($nunit_console_exe -eq $null){
+		throw "Failed to find nunit-console.exe in the packages folder: '$($packages.FullName)'"
+	}
+	
+	return $nunit_console_exe.FullName
 }
 
 function Publish-Artifacts {
@@ -188,5 +237,5 @@ $cfg.SpecFlowReportType = 'nunitexecutionreport'
 $cfg.PublishArtifacts = $true
 $cfg.Cleanup = $true
 
-Export-ModuleMember -Function Invoke-TeamCitySpecFlowReport, Properties
+Export-ModuleMember -Function Invoke-TeamCitySpecFlowReport, Set-Properties
 
