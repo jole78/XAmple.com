@@ -15,10 +15,20 @@ function Invoke-TeamCitySpecFlowReport {
 	 [string[]]$categories = @()
 	)
 	
-	$args = Parse-Arguments
+	try {
 	
-	Invoke-NUnitConsoleExe $args.PathToAssemblyOrProject $categories
-	Invoke-SpecFlowExe $args.PathToProjectFile
+		$args = Parse-Arguments
+		
+		Invoke-NUnitConsoleExe $args.PathToAssemblyOrProject $categories
+		Invoke-SpecFlowExe $args.PathToProjectFile | Tee-Object -Variable specflow_out | Out-Null
+		
+		Publish-Artifacts $specflow_out.HtmlReport
+		Remove-Files $specflow_out
+	
+	} catch {
+		Write-Error $_.Exception
+		exit 1
+	}
 }
 
 function Parse-Arguments {
@@ -89,6 +99,22 @@ function Invoke-SpecFlowExe {
 		[Parameter(Position = 1, Mandatory = 1)][string] $projectFile
 	)
 	
+	$out = @{}
+	
+	# Output from NUnit
+	if(Test-Path .\TestResult.txt -PathType:Leaf) {
+		$out.NUnitOutput = Get-Item .\TestResult.txt
+	} else {
+		throw "Failed to find nunit output'"
+	}
+	
+	# Report from NUnit
+	if(Test-Path .\TestResult.xml -PathType:Leaf) {
+		$out.NUnitReport = Get-Item .\TestResult.xml
+	} else {
+		throw "Failed to find nunit report'"
+	}
+	
 	# Path to specflow.exe
 	if($cfg.PathToSpecFlowExe) {
 		$exe = $cfg.PathToSpecFlowExe
@@ -102,24 +128,55 @@ function Invoke-SpecFlowExe {
 			
 			#copy config file if it exists
 			if(Test-Path .\specflow.exe.config -PathType:Leaf) {
-				Copy-Item -Path .\specflow.exe.config -Destination (Get-Item $exe).Directory
+				$dir = (Get-Item $exe).Directory
+				Copy-Item -Path .\specflow.exe.config -Destination $dir
+				$out.SpecFlowExeConfig = Get-Item (Join-Path $dir -ChildPath specflow.exe.config)
 			}
-			# TODO: need to remove the config file after completion
 		
 			$parameters = @()
 			
 			$parameters += $cfg.SpecFlowReportType
 			$parameters += $projectFile
 			
-			&$exe $parameters | Out-Host
+			&$exe $parameters | Out-Null
+			
+			if(Test-Path .\TestResult.html -PathType:Leaf) {
+				$out.HtmlReport = Get-Item .\TestResult.html
+			}
+			
+			return $out
+			
 		} catch {
 			throw "Error when executing specflow.exe: " + $_
-		} finally {
-		 	$nn = "$((Get-Item $exe).Directory)\specflow.exe.config"
-			Remove-Item $nn
-		}
+		} 
 	} else {
 		throw "Failed to find 'specflow.exe' at location '$exe'"
+	}
+}
+
+function Publish-Artifacts {
+	param(
+		[string]$path
+	)
+ if($cfg.PublishArtifacts) {
+ 	Write-Host "##teamcity[publishArtifacts '$path']"
+ }
+}
+
+function Remove-Files {
+	param(
+		$files
+	)
+	
+	if($cfg.Cleanup) {
+	
+		foreach($key in $files.Keys) {
+			
+			$file = $files[$key]
+			if(Test-Path $file -PathType:Leaf) {
+				Remove-Item $file -ErrorAction:SilentlyContinue | Out-Null
+			}
+		}	
 	}
 }
 
@@ -128,6 +185,8 @@ function Invoke-SpecFlowExe {
 $cfg = @{}
 $cfg.Configuration = 'Release'
 $cfg.SpecFlowReportType = 'nunitexecutionreport'
+$cfg.PublishArtifacts = $true
+$cfg.Cleanup = $true
 
 Export-ModuleMember -Function Invoke-TeamCitySpecFlowReport, Properties
 
