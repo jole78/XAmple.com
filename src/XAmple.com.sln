@@ -9,8 +9,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{F87A3B
 		.nuget\packages.config = .nuget\packages.config
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XAmple.Web.Tests", "XAmple.Web.Tests\XAmple.Web.Tests.csproj", "{153C3857-9A3A-4AB2-AE68-B99F138F0159}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XAmple.Web", "XAmple.Web\XAmple.Web.csproj", "{7025067A-086A-43F4-A663-3E0C6E30B7CF}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{3A7C1E54-3EC1-4779-BE3B-A6D667C42004}"
@@ -25,10 +23,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{153C3857-9A3A-4AB2-AE68-B99F138F0159}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{153C3857-9A3A-4AB2-AE68-B99F138F0159}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{153C3857-9A3A-4AB2-AE68-B99F138F0159}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{153C3857-9A3A-4AB2-AE68-B99F138F0159}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7025067A-086A-43F4-A663-3E0C6E30B7CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7025067A-086A-43F4-A663-3E0C6E30B7CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7025067A-086A-43F4-A663-3E0C6E30B7CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -42,7 +36,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{153C3857-9A3A-4AB2-AE68-B99F138F0159} = {0150E76B-3B35-452A-8150-EA65EA4B7F9B}
 		{1E8F6659-7039-4F53-841B-7F5E97222271} = {0150E76B-3B35-452A-8150-EA65EA4B7F9B}
 		{7025067A-086A-43F4-A663-3E0C6E30B7CF} = {3A7C1E54-3EC1-4779-BE3B-A6D667C42004}
 	EndGlobalSection
