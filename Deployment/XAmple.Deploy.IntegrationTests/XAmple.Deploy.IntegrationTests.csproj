@@ -85,6 +85,8 @@
       <LastGenOutput>Deployment.feature.cs</LastGenOutput>
     </None>
     <None Include="packages.config" />
+    <None Include="specflow.exe.config" />
+    <None Include="TeamCity.SpecFlow.Reporting.psm1" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Support\Builders\" />
