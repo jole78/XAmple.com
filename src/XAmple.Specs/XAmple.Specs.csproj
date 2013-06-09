@@ -55,7 +55,8 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
-    <None Include="runner.ps1" />
+    <None Include="specflow.exe.config" />
+    <None Include="TeamCity.SpecFlow.Reporting.psm1" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Features\" />
