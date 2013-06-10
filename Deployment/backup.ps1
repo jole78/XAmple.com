@@ -57,7 +57,7 @@ function Backup {
 	} catch {
 		$exception = $_.Exception
 		Write-Host "ERROR" -ForegroundColor:Red
-		throw " - Restore-WDPackage failed: $exception"
+		throw " - Backup failed: $exception"
 	}
 	
 	Write-Host "OK" -ForegroundColor Green
