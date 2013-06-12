@@ -49,7 +49,7 @@ function Invoke-Backup {
 		EnsureWDPowerShellMode
 		
 		Write-Host " - Executing a backup of site '$Site'..." -NoNewline
-		$parameters = Build-BackupParameters
+		$parameters = BuildParameters
 		$result = Backup-WDApp @parameters -ErrorAction:Stop
 		AfterBackup -Path $result.Package
 			
