@@ -1,4 +1,35 @@
-﻿function AfterBackup([string] $path) {
+﻿function Invoke-Backup {
+	param([string]$site = $(throw '- Need IIS site name'))
+	
+	try {
+		EnsureWDPowerShellMode
+		
+		Write-Host " - Executing a backup of site '$site'..." -NoNewline
+		$parameters = BuildParameters $site 
+		$result = Backup-WDApp @parameters -ErrorAction:Stop
+		AfterBackup -Path $result.Package
+			
+	} catch {
+		Write-Error $_.Exception
+		exit 1
+	}
+	
+	Write-Host "OK"
+	Write-Host "Summary:"
+	$result | Out-String	
+}
+
+function Set-Properties {
+	param(
+		[HashTable]$properties
+	)
+
+	foreach ($key in $properties.keys) {
+		$cfg[$key] = $properties.$key
+    }
+}
+
+function AfterBackup([string] $path) {
 	if($cfg.PublishArtifacts) {
 		Write-Host "##teamcity[publishArtifacts '$path']"
 	}
@@ -24,10 +55,10 @@ function EnsureWDPowerShellMode {
 }
 
 function BuildParameters {
-	param([string]$ApplicationName)
+	param([string]$name)
 	
 	$parameters = @{
-		Application = $ApplicationName
+		Application = $name
 	}
 	
 	if($cfg.PathToSourcePublishSettingsFile) {
@@ -42,43 +73,13 @@ function BuildParameters {
 
 }
 
-function Invoke-Backup {
-	param([string]$site = $(throw '- Need IIS site name'))
-	
-	try {
-		EnsureWDPowerShellMode
-		
-		Write-Host " - Executing a backup of site '$site'..." -NoNewline
-		$parameters = BuildParameters $site 
-		$result = Backup-WDApp @parameters -ErrorAction:Stop
-		AfterBackup -Path $result.Package
-			
-	} catch {
-		Write-Error $_.Exception
-		exit 1
-	}
-	
-	Write-Host "OK"
-	Write-Host "Summary:"
-	$result | Out-String	
-}
 
-
-function Set-Properties {
-	param(
-		[HashTable]$properties
-	)
-
-	foreach ($key in $properties.keys) {
-		$cfg[$key] = $properties.$key
-    }
-}
 
 # default values
 # override by Set-Properties @{Key=Value} outside of this script
 $cfg = @{
 	PathToSourcePublishSettingsFile = $null
-	PathToBackupLocation = '.\Backups'
+	PathToBackupLocation = (Get-Location).Path + "\Backups"
 	PublishArtifacts = if($Env:TEAMCITY_DATA_PATH){$true} else {$false}
 }
 
