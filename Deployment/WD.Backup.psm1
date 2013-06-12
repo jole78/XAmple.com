@@ -4,18 +4,17 @@
 	try {
 		EnsureWDPowerShellMode
 		
-		Write-Host " - Executing a backup of site '$site'..." -NoNewline
+		Write-Host " - Executing a backup of site '$site'"
 		$parameters = BuildParameters $site 
 		$result = Backup-WDApp @parameters -ErrorAction:Stop
-		AfterBackup -Path $result.Package
+		PublishArtifacts $result.Package
 			
 	} catch {
 		Write-Error $_.Exception
 		exit 1
 	}
 	
-	Write-Host "OK"
-	Write-Host "Summary:"
+	Write-Host "---- Summary ----"
 	$result | Out-String	
 }
 
@@ -29,7 +28,7 @@ function Set-Properties {
     }
 }
 
-function AfterBackup([string] $path) {
+function PublishArtifacts([string] $path) {
 	if($cfg.PublishArtifacts) {
 		Write-Host "##teamcity[publishArtifacts '$path']"
 	}
@@ -78,7 +77,7 @@ function BuildParameters {
 # default values
 # override by Set-Properties @{Key=Value} outside of this script
 $cfg = @{
-	PathToSourcePublishSettingsFile = $null
+	PathToSourcePublishSettingsFile = $null #null implies local backup
 	PathToBackupLocation = (Get-Location).Path + "\Backups"
 	PublishArtifacts = if($Env:TEAMCITY_DATA_PATH){$true} else {$false}
 }
