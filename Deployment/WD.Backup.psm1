@@ -43,13 +43,13 @@ function BuildParameters {
 }
 
 function Invoke-Backup {
-	param([string]$Site = $(throw '- Need IIS site name'))
+	param([string]$site = $(throw '- Need IIS site name'))
 	
 	try {
 		EnsureWDPowerShellMode
 		
-		Write-Host " - Executing a backup of site '$Site'..." -NoNewline
-		$parameters = BuildParameters
+		Write-Host " - Executing a backup of site '$site'..." -NoNewline
+		$parameters = BuildParameters $site 
 		$result = Backup-WDApp @parameters -ErrorAction:Stop
 		AfterBackup -Path $result.Package
 			
